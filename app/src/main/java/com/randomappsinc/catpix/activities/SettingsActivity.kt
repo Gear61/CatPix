@@ -19,7 +19,7 @@ class SettingsActivity : AppCompatActivity(), SettingsAdapter.ItemSelectionListe
 
     companion object {
         const val SUPPORT_EMAIL = "RandomAppsInc61@gmail.com"
-        const val OTHER_APPS_URL = "https://play.google.com/store/apps/developer?id=Jchiou+Apps+Inc."
+        const val OTHER_APPS_URL = "https://play.google.com/store/apps/dev?id=9093438553713389916"
         const val REPO_URL = "https://github.com/Gear61/CatPix"
     }
 

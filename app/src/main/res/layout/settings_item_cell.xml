@@ -5,6 +5,7 @@
     android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="48dp"
+    android:foreground="?android:attr/selectableItemBackground"
     android:gravity="center_vertical"
     android:padding="12dp"
     tools:ignore="RtlHardcoded, SpUsage">
