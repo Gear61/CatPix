@@ -1,7 +1,8 @@
-package com.randomappsinc.catpix
+package com.randomappsinc.catpix.activities
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import com.randomappsinc.catpix.R
 
 class MainActivity : AppCompatActivity() {
 
