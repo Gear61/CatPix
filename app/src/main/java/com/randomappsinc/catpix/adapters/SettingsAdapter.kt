@@ -11,11 +11,11 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.randomappsinc.catpix.R
 
-open class SettingsAdapter(context: Context, protected var itemSelectionListener: ItemSelectionListener)
+class SettingsAdapter(context: Context, private var itemSelectionListener: ItemSelectionListener)
     : RecyclerView.Adapter<SettingsAdapter.SettingViewHolder>() {
 
-    protected var options: Array<String> = context.resources.getStringArray(R.array.settings_options)
-    protected var icons: Array<String> = context.resources.getStringArray(R.array.settings_icons)
+    private var options: Array<String> = context.resources.getStringArray(R.array.settings_options)
+    private var icons: Array<String> = context.resources.getStringArray(R.array.settings_icons)
 
     interface ItemSelectionListener {
         fun onItemClick(position: Int)
