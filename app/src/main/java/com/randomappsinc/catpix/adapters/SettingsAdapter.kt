@@ -11,9 +11,7 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.randomappsinc.catpix.R
 
-open class SettingsAdapter(
-        private var context: Context,
-        protected var itemSelectionListener: ItemSelectionListener)
+open class SettingsAdapter(context: Context, protected var itemSelectionListener: ItemSelectionListener)
     : RecyclerView.Adapter<SettingsAdapter.SettingViewHolder>() {
 
     protected var options: Array<String> = context.resources.getStringArray(R.array.settings_options)
@@ -24,7 +22,7 @@ open class SettingsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SettingViewHolder {
-        val itemView = LayoutInflater.from(context).inflate(
+        val itemView = LayoutInflater.from(parent.context).inflate(
                 R.layout.settings_item_cell,
                 parent,
                 false)
@@ -48,8 +46,8 @@ open class SettingsAdapter(
         }
 
         fun loadSetting(position: Int) {
-            option!!.text = options[position]
             icon!!.text = icons[position]
+            option!!.text = options[position]
         }
 
         @OnClick(R.id.parent)

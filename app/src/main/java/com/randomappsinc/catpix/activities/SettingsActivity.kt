@@ -12,7 +12,6 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.adapters.SettingsAdapter
-import com.randomappsinc.catpix.utils.closeKeyboard
 import com.randomappsinc.catpix.utils.showLongToast
 import com.randomappsinc.catpix.views.SimpleDividerItemDecoration
 
@@ -74,13 +73,11 @@ class SettingsActivity : AppCompatActivity(), SettingsAdapter.ItemSelectionListe
     }
 
     override fun startActivityForResult(intent: Intent, requestCode: Int) {
-        closeKeyboard(this)
         super.startActivityForResult(intent, requestCode)
         overridePendingTransition(R.anim.slide_left_out, R.anim.slide_left_in)
     }
 
     override fun finish() {
-        closeKeyboard(this)
         super.finish()
         overridePendingTransition(R.anim.slide_right_out, R.anim.slide_right_in)
     }

@@ -1,19 +1,17 @@
 package com.randomappsinc.catpix.utils
 
-import android.app.Activity
 import android.content.Context
 import android.support.annotation.StringRes
-import android.view.View
-import android.view.inputmethod.InputMethodManager
+import android.view.Menu
 import android.widget.Toast
+import com.joanzapata.iconify.Icon
+import com.joanzapata.iconify.IconDrawable
+import com.randomappsinc.catpix.R
 
-fun closeKeyboard(activity: Activity) {
-    val inputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-    var view = activity.currentFocus
-    if (view == null) {
-        view = View(activity)
-    }
-    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+fun loadMenuIcon(menu: Menu, itemId: Int, icon: Icon, context: Context) {
+    menu.findItem(itemId).icon = IconDrawable(context, icon)
+            .colorRes(R.color.white)
+            .actionBarSize()
 }
 
 fun showLongToast(@StringRes stringId: Int, context: Context) {
