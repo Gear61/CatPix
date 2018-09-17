@@ -18,12 +18,13 @@ import com.randomappsinc.catpix.api.CatPicture
 import com.randomappsinc.catpix.api.RestClient
 import com.randomappsinc.catpix.utils.loadMenuIcon
 
-class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.ItemSelectionListener {
+class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.Listener {
 
     @BindView(R.id.skeleton_photos) lateinit var skeleton: View
     @BindView(R.id.cat_pictures_list) lateinit var catPicturesList: RecyclerView
 
     private var feedAdapter : HomeFeedAdapter = HomeFeedAdapter(this)
+    private var restClient : RestClient = RestClient(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +34,6 @@ class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.I
 
         catPicturesList.adapter = feedAdapter
 
-        val restClient = RestClient(this)
         restClient.fetchPictures(1)
     }
 
@@ -47,10 +47,10 @@ class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.I
         }
         skeleton.visibility = View.GONE
         feedAdapter.addPicturesUrls(pictureUrls)
+        catPicturesList.visibility = View.VISIBLE
     }
 
-    override fun onPictureFetchFail() {
-    }
+    override fun onPictureFetchFail() {}
 
     override fun onItemClick(position: Int) {
         startActivity(Intent(this, GalleryFullViewActivity::class.java)

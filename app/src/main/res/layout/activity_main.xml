@@ -7,10 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
-    <include
-        android:id="@+id/skeleton_photos"
-        layout="@layout/skeleton_grid"/>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cat_pictures_list"
         android:layout_width="match_parent"
@@ -18,5 +14,10 @@
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
         android:clipToPadding="false"
+        android:visibility="gone"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+    <include
+        android:id="@+id/skeleton_photos"
+        layout="@layout/skeleton_grid"/>
 </FrameLayout>

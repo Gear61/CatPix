@@ -1,23 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="2dp"
-    android:paddingRight="2dp"
     tools:ignore="ContentDescription">
 
-    <com.randomappsinc.catpix.views.SquareImageView
-        android:id="@+id/picture_1"
-        style="@style/cat_picture_grid_cell"/>
+    <LinearLayout
+        android:id="@+id/pictures_row"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp">
 
-    <com.randomappsinc.catpix.views.SquareImageView
-        android:id="@+id/picture_2"
-        style="@style/cat_picture_grid_cell"/>
+        <com.randomappsinc.catpix.views.SquareImageView
+            android:id="@+id/picture_1"
+            style="@style/cat_picture_grid_cell"/>
 
-    <com.randomappsinc.catpix.views.SquareImageView
-        android:id="@+id/picture_3"
-        style="@style/cat_picture_grid_cell"/>
-</LinearLayout>
+        <com.randomappsinc.catpix.views.SquareImageView
+            android:id="@+id/picture_2"
+            style="@style/cat_picture_grid_cell"/>
+
+        <com.randomappsinc.catpix.views.SquareImageView
+            android:id="@+id/picture_3"
+            style="@style/cat_picture_grid_cell"/>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pagination_spinner"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:layout_gravity="center"/>
+</FrameLayout>
