@@ -27,7 +27,7 @@
             style="@style/cat_picture_grid_cell"/>
     </LinearLayout>
 
-    <android.support.v4.widget.ContentLoadingProgressBar
+    <ProgressBar
         android:id="@+id/pagination_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -4,12 +4,12 @@ import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
-import android.support.v4.widget.ContentLoadingProgressBar
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -43,7 +43,7 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
             if (wasShowingSpinner) {
                 notifyItemChanged(prevSize - 1)
             }
-            notifyItemRangeInserted(prevSize + 1, newUrls.size / 3)
+            notifyItemRangeInserted(prevSize, newUrls.size / 3)
         } else {
             canFetchMore = false
         }
@@ -72,7 +72,7 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
         @BindView(R.id.picture_1) lateinit var picture1: ImageView
         @BindView(R.id.picture_2) lateinit var picture2: ImageView
         @BindView(R.id.picture_3) lateinit var picture3: ImageView
-        @BindView(R.id.pagination_spinner) lateinit var loadingSpinner: ContentLoadingProgressBar
+        @BindView(R.id.pagination_spinner) lateinit var loadingSpinner: ProgressBar
 
         init {
             ButterKnife.bind(this, view)
@@ -82,9 +82,9 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
             if (position == itemCount - 1 && canFetchMore) {
                 listener.onLastItemSeen(pictureUrls.size/Constants.EXPECTED_PAGE_SIZE)
                 picturesRow.visibility = View.GONE
-                loadingSpinner.show()
+                loadingSpinner.visibility = View.VISIBLE
             } else {
-                loadingSpinner.hide()
+                loadingSpinner.visibility = View.GONE
                 picturesRow.visibility = View.VISIBLE
                 val firstPosition = position * 3
                 if (firstPosition < pictureUrls.size) {
