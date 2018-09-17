@@ -23,8 +23,9 @@ class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.L
     @BindView(R.id.skeleton_photos) lateinit var skeleton: View
     @BindView(R.id.cat_pictures_list) lateinit var catPicturesList: RecyclerView
 
-    private var feedAdapter : HomeFeedAdapter = HomeFeedAdapter(this)
+    private lateinit var feedAdapter : HomeFeedAdapter
     private var restClient : RestClient = RestClient(this)
+    private var fetchingNextPage = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.L
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
 
+        feedAdapter = HomeFeedAdapter(this, this)
         catPicturesList.adapter = feedAdapter
 
         restClient.fetchPictures(1)
@@ -47,6 +49,7 @@ class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.L
         }
         skeleton.visibility = View.GONE
         feedAdapter.addPicturesUrls(pictureUrls)
+        fetchingNextPage = false
         catPicturesList.visibility = View.VISIBLE
     }
 
@@ -57,6 +60,13 @@ class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.L
                 .putStringArrayListExtra(GalleryFullViewActivity.URLS_KEY, feedAdapter.pictureUrls)
                 .putExtra(GalleryFullViewActivity.POSITION_KEY, position))
         overridePendingTransition(0, 0)
+    }
+
+    override fun onLastItemSeen(currentLastPage: Int) {
+        if (!fetchingNextPage) {
+            fetchingNextPage = true
+            restClient.fetchPictures(currentLastPage + 1)
+        }
     }
 
     override fun startActivityForResult(intent: Intent, requestCode: Int) {
