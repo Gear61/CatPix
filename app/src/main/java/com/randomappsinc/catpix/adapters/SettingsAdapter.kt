@@ -38,16 +38,16 @@ class SettingsAdapter(context: Context, private var itemSelectionListener: ItemS
     }
 
     inner class SettingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        @JvmField @BindView(R.id.settings_icon) var icon: TextView? = null
-        @JvmField @BindView(R.id.settings_option) var option: TextView? = null
+        @BindView(R.id.settings_icon) lateinit var icon: TextView
+        @BindView(R.id.settings_option) lateinit var option: TextView
 
         init {
             ButterKnife.bind(this, view)
         }
 
         fun loadSetting(position: Int) {
-            icon!!.text = icons[position]
-            option!!.text = options[position]
+            icon.text = icons[position]
+            option.text = options[position]
         }
 
         @OnClick(R.id.parent)

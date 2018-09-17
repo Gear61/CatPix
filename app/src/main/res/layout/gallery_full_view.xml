@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/theater_black"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="SpUsage, RtlHardcoded">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pictures_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/close"
+        android:layout_alignParentLeft="true"
+        android:text="@string/close_icon"
+        android:textSize="32dp"
+        style="@style/full_view_toolbar_button"/>
+</RelativeLayout>

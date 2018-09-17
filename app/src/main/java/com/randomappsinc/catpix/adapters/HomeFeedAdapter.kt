@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import butterknife.BindView
 import butterknife.ButterKnife
+import butterknife.OnClick
 import com.randomappsinc.catpix.R
 import com.squareup.picasso.Picasso
 import java.util.*
@@ -15,10 +16,10 @@ class HomeFeedAdapter(private var itemSelectionListener: ItemSelectionListener)
     : RecyclerView.Adapter<HomeFeedAdapter.PicturesRowViewHolder>() {
 
     interface ItemSelectionListener {
-        fun onItemClick(pictureUrl: String)
+        fun onItemClick(position: Int)
     }
 
-    private val pictureUrls = ArrayList<String>()
+    val pictureUrls = ArrayList<String>()
 
     fun addPicturesUrls(newUrls: List<String>) {
         pictureUrls.addAll(newUrls)
@@ -43,9 +44,9 @@ class HomeFeedAdapter(private var itemSelectionListener: ItemSelectionListener)
     }
 
     inner class PicturesRowViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        @JvmField @BindView(R.id.picture_1) var picture1: ImageView? = null
-        @JvmField @BindView(R.id.picture_2) var picture2: ImageView? = null
-        @JvmField @BindView(R.id.picture_3) var picture3: ImageView? = null
+        @BindView(R.id.picture_1) lateinit var picture1: ImageView
+        @BindView(R.id.picture_2) lateinit var picture2: ImageView
+        @BindView(R.id.picture_3) lateinit var picture3: ImageView
 
         init {
             ButterKnife.bind(this, view)
@@ -76,6 +77,21 @@ class HomeFeedAdapter(private var itemSelectionListener: ItemSelectionListener)
                     }
                 }
             }
+        }
+
+        @OnClick(R.id.picture_1)
+        fun onFirstClicked() {
+            itemSelectionListener.onItemClick(adapterPosition * 3)
+        }
+
+        @OnClick(R.id.picture_2)
+        fun onSecondClicked() {
+            itemSelectionListener.onItemClick(adapterPosition * 3 + 1)
+        }
+
+        @OnClick(R.id.picture_3)
+        fun onThirdClicked() {
+            itemSelectionListener.onItemClick(adapterPosition * 3 + 2)
         }
     }
 }

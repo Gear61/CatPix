@@ -20,8 +20,8 @@ import com.randomappsinc.catpix.utils.loadMenuIcon
 
 class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.ItemSelectionListener {
 
-    @JvmField @BindView(R.id.skeleton_photos) var skeleton: View? = null
-    @JvmField @BindView(R.id.cat_pictures_list) var catPicturesList: RecyclerView? = null
+    @BindView(R.id.skeleton_photos) lateinit var skeleton: View
+    @BindView(R.id.cat_pictures_list) lateinit var catPicturesList: RecyclerView
 
     private var feedAdapter : HomeFeedAdapter = HomeFeedAdapter(this)
 
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.I
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
 
-        catPicturesList!!.adapter = feedAdapter
+        catPicturesList.adapter = feedAdapter
 
         val restClient = RestClient(this)
         restClient.fetchPictures(1)
@@ -45,14 +45,18 @@ class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.I
                 pictureUrls.add(pictureUrl)
             }
         }
-        skeleton!!.visibility = View.GONE
+        skeleton.visibility = View.GONE
         feedAdapter.addPicturesUrls(pictureUrls)
     }
 
     override fun onPictureFetchFail() {
     }
 
-    override fun onItemClick(pictureUrl: String) {
+    override fun onItemClick(position: Int) {
+        startActivity(Intent(this, GalleryFullViewActivity::class.java)
+                .putStringArrayListExtra(GalleryFullViewActivity.URLS_KEY, feedAdapter.pictureUrls)
+                .putExtra(GalleryFullViewActivity.POSITION_KEY, position))
+        overridePendingTransition(0, 0)
     }
 
     override fun startActivityForResult(intent: Intent, requestCode: Int) {

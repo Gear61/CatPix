@@ -23,9 +23,9 @@ class SettingsActivity : AppCompatActivity(), SettingsAdapter.ItemSelectionListe
         const val REPO_URL = "https://github.com/Gear61/CatPix"
     }
 
-    @JvmField @BindView(R.id.settings_options) var settingsOptions: RecyclerView? = null
-    @JvmField @BindString(R.string.feedback_subject) var feedbackSubject: String? = null
-    @JvmField @BindString(R.string.send_email) var sendEmail: String? = null
+    @BindView(R.id.settings_options) lateinit var settingsOptions: RecyclerView
+    @BindString(R.string.feedback_subject) lateinit var feedbackSubject: String
+    @BindString(R.string.send_email) lateinit var sendEmail: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +34,8 @@ class SettingsActivity : AppCompatActivity(), SettingsAdapter.ItemSelectionListe
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        settingsOptions!!.addItemDecoration(SimpleDividerItemDecoration(this))
-        settingsOptions!!.adapter = SettingsAdapter(this, this)
+        settingsOptions.addItemDecoration(SimpleDividerItemDecoration(this))
+        settingsOptions.adapter = SettingsAdapter(this, this)
     }
 
     override fun onItemClick(position: Int) {

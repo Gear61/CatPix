@@ -14,10 +14,10 @@ fun loadMenuIcon(menu: Menu, itemId: Int, icon: Icon, context: Context) {
             .actionBarSize()
 }
 
-fun showLongToast(@StringRes stringId: Int, context: Context) {
+fun showLongToast(@StringRes stringId: Int, context: Context?) {
     showToast(stringId, Toast.LENGTH_LONG, context)
 }
 
-fun showToast(@StringRes stringId: Int, toastLength: Int, context: Context) {
+fun showToast(@StringRes stringId: Int, toastLength: Int, context: Context?) {
     Toast.makeText(context, stringId, toastLength).show()
 }

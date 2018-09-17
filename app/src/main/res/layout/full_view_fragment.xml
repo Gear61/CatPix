@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent"
+    android:background="@color/theater_black"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha="0">
+
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/picture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</FrameLayout>
