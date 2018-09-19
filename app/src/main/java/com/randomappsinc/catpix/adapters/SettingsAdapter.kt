@@ -50,7 +50,7 @@ class SettingsAdapter(context: Context, private var itemSelectionListener: ItemS
             option.text = options[position]
         }
 
-        @OnClick(R.id.parent)
+        @OnClick(R.id.settings_cell_parent)
         fun onSettingSelected() {
             itemSelectionListener.onItemClick(adapterPosition)
         }
