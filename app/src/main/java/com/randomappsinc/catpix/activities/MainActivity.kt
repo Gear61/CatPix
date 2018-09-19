@@ -19,6 +19,8 @@ import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.persistence.PreferencesManager
 import com.randomappsinc.catpix.utils.Constants
 import com.randomappsinc.catpix.utils.loadMenuIcon
+import com.randomappsinc.catpix.utils.showHomepageDialog
+import com.randomappsinc.catpix.utils.showLongToast
 
 class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.Listener {
 
@@ -41,8 +43,11 @@ class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.L
         catPicturesList.adapter = feedAdapter
 
         preferencesManager = PreferencesManager(this)
+        preferencesManager.logAppOpen()
         pageToFetch = preferencesManager.nextPageToFetch
         restClient.fetchPictures(pageToFetch)
+
+        showHomepageDialog(this)
     }
 
     override fun onPicturesFetched(pictures: ArrayList<CatPicture>) {
@@ -59,7 +64,7 @@ class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.L
     }
 
     override fun onPictureFetchFail() {
-
+        showLongToast(R.string.failed_to_fetch_cats, this)
     }
 
     override fun onItemClick(position: Int) {

@@ -29,6 +29,7 @@ class GalleryFullViewActivity : AppCompatActivity() {
 
         val pictures = intent.getParcelableArrayListExtra<CatPicture>(PICTURES_KEY)
         galleryAdapter = GalleryFullViewAdapter(supportFragmentManager, pictures)
+        picturesPager.offscreenPageLimit = 2
         picturesPager.adapter = galleryAdapter
 
         val initialPosition = intent.getIntExtra(POSITION_KEY, 0)

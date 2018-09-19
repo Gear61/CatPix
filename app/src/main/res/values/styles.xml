@@ -14,7 +14,7 @@
         <item name="android:layout_margin">2dp</item>
     </style>
 
-    <style name="skeleton_cat_picture_grid__cell" parent="cat_picture_grid_cell">
+    <style name="skeleton_cat_picture_grid_cell" parent="cat_picture_grid_cell">
         <item name="android:background">@color/gray_300</item>
     </style>
 

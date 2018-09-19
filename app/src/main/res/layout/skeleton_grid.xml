@@ -7,69 +7,90 @@
     android:orientation="vertical">
 
     <LinearLayout style="@style/cat_pictures_row">
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
 
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
 
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
     </LinearLayout>
 
     <LinearLayout style="@style/cat_pictures_row">
-        <View
-            style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
 
-        <View
-            style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
 
-        <View
-            style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
     </LinearLayout>
 
     <LinearLayout style="@style/cat_pictures_row">
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
 
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
 
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
     </LinearLayout>
 
     <LinearLayout style="@style/cat_pictures_row">
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
 
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
 
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
     </LinearLayout>
 
     <LinearLayout style="@style/cat_pictures_row">
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
 
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
 
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
     </LinearLayout>
 
     <LinearLayout style="@style/cat_pictures_row">
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
 
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
 
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
     </LinearLayout>
 
     <LinearLayout style="@style/cat_pictures_row">
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
 
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
 
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
     </LinearLayout>
 
     <LinearLayout style="@style/cat_pictures_row">
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
 
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
 
-        <View style="@style/skeleton_cat_picture_grid__cell"/>
+        <com.randomappsinc.catpix.views.SquareView
+            style="@style/skeleton_cat_picture_grid_cell"/>
     </LinearLayout>
 </LinearLayout>

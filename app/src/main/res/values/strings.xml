@@ -5,4 +5,19 @@
     <string name="image_load_fail">Failed to load image.</string>
 
     <string name="failed_to_fetch_cats">Failed to load cat pictures.</string>
+
+    <string name="please_rate">
+        Hey, it looks like you\'re a frequent user of Cat Pix!
+        If you have a couple seconds, please rate this app in the Play Store.
+        Every rating goes a long way towards motivating me to continue improving this app!
+    </string>
+    <string name="sure_will_help">Sure, I\'ll help</string>
+    <string name="no_im_good">No, I\'m good</string>
+
+    <string name="share_prompt_title">Help Other Cat Lovers!</string>
+    <string name="please_share">
+        If you have a friend who\'s a cat lover, please share Cat Pix with them!
+        My only goal is to put a smile on the face of every cat lover out there,
+        which is why Cat Pix will always remain free and ad-free.
+    </string>
 </resources>
