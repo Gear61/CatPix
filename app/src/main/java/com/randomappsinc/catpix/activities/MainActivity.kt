@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.L
         startActivity(Intent(this, GalleryFullViewActivity::class.java)
                 .putParcelableArrayListExtra(GalleryFullViewActivity.PICTURES_KEY, feedAdapter.pictures)
                 .putExtra(GalleryFullViewActivity.POSITION_KEY, position))
-        overridePendingTransition(0, 0)
+        overridePendingTransition(R.anim.fade_in, 0)
     }
 
     override fun onLastItemSeen() {

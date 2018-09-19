@@ -3,6 +3,7 @@ package com.randomappsinc.catpix.fragments
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.widget.ContentLoadingProgressBar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,7 +34,9 @@ class FullViewFragment : Fragment() {
 
     private val imageLoadingCallback = object : Callback {
         override fun onSuccess() {
-            parent.animate().alpha(1.0f).duration = resources.getInteger(R.integer.default_anim_length).toLong()
+            loadingSpinner.hide()
+            picture.animate().alpha(1.0f).duration =
+                    resources.getInteger(R.integer.default_anim_length).toLong()
         }
 
         override fun onError(e: Exception) {
@@ -41,7 +44,7 @@ class FullViewFragment : Fragment() {
         }
     }
 
-    @BindView(R.id.parent) internal lateinit var parent: View
+    @BindView(R.id.loading_spinner) internal lateinit var loadingSpinner: ContentLoadingProgressBar
     @BindView(R.id.picture) internal lateinit var picture: ImageView
 
     private var unbinder: Unbinder? = null
@@ -50,6 +53,7 @@ class FullViewFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.full_view_fragment, container, false)
         unbinder = ButterKnife.bind(this, rootView)
+        loadingSpinner.show()
         defaultThumbnail = IconDrawable(
                 activity,
                 IoniconsIcons.ion_image).colorRes(R.color.dark_gray)
