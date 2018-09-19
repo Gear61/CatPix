@@ -3,7 +3,7 @@ package com.randomappsinc.catpix.api
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class CatPicture {
+class CatPictureUrl {
 
     @SerializedName("url")
     @Expose

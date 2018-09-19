@@ -9,11 +9,12 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.adapters.GalleryFullViewAdapter
+import com.randomappsinc.catpix.models.CatPicture
 
 class GalleryFullViewActivity : AppCompatActivity() {
 
     companion object {
-        const val URLS_KEY = "urls"
+        const val PICTURES_KEY = "urls"
         const val POSITION_KEY = "position"
     }
 
@@ -26,8 +27,8 @@ class GalleryFullViewActivity : AppCompatActivity() {
         setContentView(R.layout.gallery_full_view)
         ButterKnife.bind(this)
 
-        val urls = intent.getStringArrayListExtra(URLS_KEY)
-        galleryAdapter = GalleryFullViewAdapter(supportFragmentManager, urls)
+        val pictures = intent.getParcelableArrayListExtra<CatPicture>(PICTURES_KEY)
+        galleryAdapter = GalleryFullViewAdapter(supportFragmentManager, pictures)
         picturesPager.adapter = galleryAdapter
 
         val initialPosition = intent.getIntExtra(POSITION_KEY, 0)

@@ -7,5 +7,5 @@ import retrofit2.http.Query
 interface CatService {
 
     @GET("images/search")
-    fun fetchCatPictures(@Query("page") page: Int, @Query("size") size: String): Call<List<CatPicture>>
+    fun fetchCatPictures(@Query("page") page: Int, @Query("size") size: String): Call<List<CatPictureUrl>>
 }

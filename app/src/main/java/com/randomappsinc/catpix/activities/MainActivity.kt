@@ -14,8 +14,8 @@ import com.joanzapata.iconify.fonts.IoniconsIcons
 import com.joanzapata.iconify.fonts.IoniconsModule
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.adapters.HomeFeedAdapter
-import com.randomappsinc.catpix.api.CatPicture
 import com.randomappsinc.catpix.api.RestClient
+import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.persistence.PreferencesManager
 import com.randomappsinc.catpix.utils.Constants
 import com.randomappsinc.catpix.utils.loadMenuIcon
@@ -45,14 +45,7 @@ class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.L
         restClient.fetchPictures(pageToFetch)
     }
 
-    override fun onPicturesFetched(pictures: List<CatPicture>) {
-        val pictureUrls = ArrayList<String>()
-        for (catPicture in pictures) {
-            val pictureUrl = catPicture.url
-            if (pictureUrl != null) {
-                pictureUrls.add(pictureUrl)
-            }
-        }
+    override fun onPicturesFetched(pictures: ArrayList<CatPicture>) {
         if (pictures.size < Constants.EXPECTED_PAGE_SIZE) {
             pageToFetch = 0
         } else {
@@ -60,16 +53,18 @@ class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.L
         }
         preferencesManager.nextPageToFetch = pageToFetch
         skeleton.visibility = View.GONE
-        feedAdapter.addPicturesUrls(pictureUrls)
+        feedAdapter.addPicturesUrls(pictures)
         fetchingNextPage = false
         catPicturesList.visibility = View.VISIBLE
     }
 
-    override fun onPictureFetchFail() {}
+    override fun onPictureFetchFail() {
+
+    }
 
     override fun onItemClick(position: Int) {
         startActivity(Intent(this, GalleryFullViewActivity::class.java)
-                .putStringArrayListExtra(GalleryFullViewActivity.URLS_KEY, feedAdapter.pictureUrls)
+                .putParcelableArrayListExtra(GalleryFullViewActivity.PICTURES_KEY, feedAdapter.pictures)
                 .putExtra(GalleryFullViewActivity.POSITION_KEY, position))
         overridePendingTransition(0, 0)
     }

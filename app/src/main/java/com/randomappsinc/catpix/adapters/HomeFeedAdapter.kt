@@ -14,6 +14,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.randomappsinc.catpix.R
+import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.utils.Constants
 import com.squareup.picasso.Picasso
 import java.util.*
@@ -29,22 +30,22 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
         fun onLastItemSeen()
     }
 
-    val pictureUrls = ArrayList<String>()
+    val pictures = ArrayList<CatPicture>()
     var placeholder : Drawable = ColorDrawable(ContextCompat.getColor(context, R.color.gray_300))
 
-    fun addPicturesUrls(newUrls: List<String>) {
-        val wasShowingSpinner = !pictureUrls.isEmpty()
+    fun addPicturesUrls(newPictures: List<CatPicture>) {
+        val wasShowingSpinner = !pictures.isEmpty()
         val prevSize = itemCount
-        if (!newUrls.isEmpty()) {
-            if (newUrls.size < Constants.EXPECTED_PAGE_SIZE) {
+        if (!newPictures.isEmpty()) {
+            if (newPictures.size < Constants.EXPECTED_PAGE_SIZE) {
                 canFetchMore = false
             }
-            pictureUrls.addAll(newUrls)
+            pictures.addAll(newPictures)
             if (wasShowingSpinner) {
                 notifyItemChanged(prevSize - 1)
             }
-            if (newUrls.size > 3) {
-                notifyItemRangeInserted(prevSize, newUrls.size / 3)
+            if (newPictures.size > 3) {
+                notifyItemRangeInserted(prevSize, newPictures.size / 3)
             }
         } else {
             canFetchMore = false
@@ -67,8 +68,8 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
     }
 
     override fun getItemCount(): Int {
-        val coreSize = pictureUrls.size / 3
-        val numRows = if (pictureUrls.size % 3 > 0) coreSize + 1 else coreSize
+        val coreSize = pictures.size / 3
+        val numRows = if (pictures.size % 3 > 0) coreSize + 1 else coreSize
         return if (canFetchMore) numRows + 1 else numRows
     }
 
@@ -92,25 +93,25 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
                 loadingSpinner.visibility = View.GONE
                 picturesRow.visibility = View.VISIBLE
                 val firstPosition = position * 3
-                if (firstPosition < pictureUrls.size) {
+                if (firstPosition < pictures.size) {
                     Picasso.get()
-                            .load(pictureUrls[firstPosition])
+                            .load(pictures[firstPosition].getThumbnailUrlWithFallback())
                             .placeholder(placeholder)
                             .fit()
                             .centerCrop()
                             .into(picture1)
 
-                    if (firstPosition + 1 < pictureUrls.size) {
+                    if (firstPosition + 1 < pictures.size) {
                         Picasso.get()
-                                .load(pictureUrls[firstPosition + 1])
+                                .load(pictures[firstPosition + 1].getThumbnailUrlWithFallback())
                                 .placeholder(placeholder)
                                 .fit()
                                 .centerCrop()
                                 .into(picture2)
 
-                        if (firstPosition + 2 < pictureUrls.size) {
+                        if (firstPosition + 2 < pictures.size) {
                             Picasso.get()
-                                    .load(pictureUrls[firstPosition + 2])
+                                    .load(pictures[firstPosition + 2].getThumbnailUrlWithFallback())
                                     .placeholder(placeholder)
                                     .fit()
                                     .centerCrop()
