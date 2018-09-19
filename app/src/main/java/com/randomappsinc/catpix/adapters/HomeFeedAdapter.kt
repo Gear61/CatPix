@@ -33,19 +33,24 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
     var placeholder : Drawable = ColorDrawable(ContextCompat.getColor(context, R.color.gray_300))
 
     fun addPicturesUrls(newUrls: List<String>) {
+        val wasShowingSpinner = !pictureUrls.isEmpty()
+        val prevSize = itemCount
         if (!newUrls.isEmpty()) {
             if (newUrls.size < Constants.EXPECTED_PAGE_SIZE) {
                 canFetchMore = false
             }
-            val wasShowingSpinner = !pictureUrls.isEmpty()
-            val prevSize = itemCount
             pictureUrls.addAll(newUrls)
             if (wasShowingSpinner) {
                 notifyItemChanged(prevSize - 1)
             }
-            notifyItemRangeInserted(prevSize, newUrls.size / 3)
+            if (newUrls.size > 3) {
+                notifyItemRangeInserted(prevSize, newUrls.size / 3)
+            }
         } else {
             canFetchMore = false
+            if (wasShowingSpinner) {
+                notifyItemRemoved(prevSize - 1)
+            }
         }
     }
 

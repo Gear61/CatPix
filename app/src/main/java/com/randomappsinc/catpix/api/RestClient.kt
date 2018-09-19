@@ -11,10 +11,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RestClient(private var listener: Listener) {
 
-    object Constants {
-        const val BASE_URL = "https://api.thecatapi.com/v1/"
-    }
-
     private var catService: CatService
     private val handler: Handler
 
@@ -30,7 +26,7 @@ class RestClient(private var listener: Listener) {
                 .build()
 
         val retrofit = Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
+                .baseUrl(ApiConstants.BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
@@ -43,7 +39,7 @@ class RestClient(private var listener: Listener) {
     }
 
     fun fetchPictures(page: Int) {
-        catService.fetchCatPictures(page).enqueue(object : Callback<List<CatPicture>> {
+        catService.fetchCatPictures(page, ApiConstants.SMALL).enqueue(object : Callback<List<CatPicture>> {
             override fun onResponse(call: Call<List<CatPicture>>, response: Response<List<CatPicture>>) {
                 if (response.isSuccessful) {
                     val catPictures = response.body()
