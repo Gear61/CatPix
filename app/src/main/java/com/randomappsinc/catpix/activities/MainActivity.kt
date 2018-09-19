@@ -16,6 +16,8 @@ import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.adapters.HomeFeedAdapter
 import com.randomappsinc.catpix.api.CatPicture
 import com.randomappsinc.catpix.api.RestClient
+import com.randomappsinc.catpix.persistence.PreferencesManager
+import com.randomappsinc.catpix.utils.Constants
 import com.randomappsinc.catpix.utils.loadMenuIcon
 
 class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.Listener {
@@ -26,6 +28,8 @@ class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.L
     private lateinit var feedAdapter : HomeFeedAdapter
     private var restClient : RestClient = RestClient(this)
     private var fetchingNextPage = false
+    private var pageToFetch = 0
+    private lateinit var preferencesManager : PreferencesManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +40,9 @@ class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.L
         feedAdapter = HomeFeedAdapter(this, this)
         catPicturesList.adapter = feedAdapter
 
-        restClient.fetchPictures(1)
+        preferencesManager = PreferencesManager(this)
+        pageToFetch = preferencesManager.nextPageToFetch
+        restClient.fetchPictures(pageToFetch)
     }
 
     override fun onPicturesFetched(pictures: List<CatPicture>) {
@@ -47,6 +53,12 @@ class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.L
                 pictureUrls.add(pictureUrl)
             }
         }
+        if (pictures.size < Constants.EXPECTED_PAGE_SIZE) {
+            pageToFetch = 0
+        } else {
+            pageToFetch++
+        }
+        preferencesManager.nextPageToFetch = pageToFetch
         skeleton.visibility = View.GONE
         feedAdapter.addPicturesUrls(pictureUrls)
         fetchingNextPage = false
@@ -62,10 +74,10 @@ class MainActivity : AppCompatActivity(), RestClient.Listener, HomeFeedAdapter.L
         overridePendingTransition(0, 0)
     }
 
-    override fun onLastItemSeen(currentLastPage: Int) {
+    override fun onLastItemSeen() {
         if (!fetchingNextPage) {
             fetchingNextPage = true
-            restClient.fetchPictures(currentLastPage + 1)
+            restClient.fetchPictures(pageToFetch)
         }
     }
 

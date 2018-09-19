@@ -26,7 +26,7 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
     interface Listener {
         fun onItemClick(position: Int)
 
-        fun onLastItemSeen(currentLastPage: Int)
+        fun onLastItemSeen()
     }
 
     val pictureUrls = ArrayList<String>()
@@ -80,7 +80,7 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
 
         fun loadContent(position: Int) {
             if (position == itemCount - 1 && canFetchMore) {
-                listener.onLastItemSeen(pictureUrls.size/Constants.EXPECTED_PAGE_SIZE)
+                listener.onLastItemSeen()
                 picturesRow.visibility = View.GONE
                 loadingSpinner.visibility = View.VISIBLE
             } else {
