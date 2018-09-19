@@ -92,6 +92,8 @@ class RestClient(private var listener: Listener) {
                     catPictures.add(CatPicture(thumbnailUrls!![i], fullResUrls!![i]))
                 }
             }
+            thumbnailUrls = null
+            fullResUrls = null
             listener.onPicturesFetched(catPictures)
         }
     }

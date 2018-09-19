@@ -7,70 +7,69 @@
     android:orientation="vertical">
 
     <LinearLayout style="@style/cat_pictures_row">
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
 
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
 
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
     </LinearLayout>
 
     <LinearLayout style="@style/cat_pictures_row">
         <View
-            style="@style/cat_picture_grid_cell"/>
+            style="@style/skeleton_cat_picture_grid__cell"/>
 
         <View
-            style="@style/cat_picture_grid_cell"/>
+            style="@style/skeleton_cat_picture_grid__cell"/>
 
         <View
-            style="@style/cat_picture_grid_cell"/>
+            style="@style/skeleton_cat_picture_grid__cell"/>
     </LinearLayout>
 
     <LinearLayout style="@style/cat_pictures_row">
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
 
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
 
-        <View
-            style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
     </LinearLayout>
 
     <LinearLayout style="@style/cat_pictures_row">
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
 
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
 
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
     </LinearLayout>
 
     <LinearLayout style="@style/cat_pictures_row">
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
 
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
 
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
     </LinearLayout>
 
     <LinearLayout style="@style/cat_pictures_row">
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
 
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
 
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
     </LinearLayout>
 
     <LinearLayout style="@style/cat_pictures_row">
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
 
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
 
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
     </LinearLayout>
 
     <LinearLayout style="@style/cat_pictures_row">
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
 
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
 
-        <View style="@style/cat_picture_grid_cell"/>
+        <View style="@style/skeleton_cat_picture_grid__cell"/>
     </LinearLayout>
 </LinearLayout>
