@@ -8,7 +8,7 @@ import com.randomappsinc.catpix.models.CatPicture
 
 class GalleryFullViewAdapter(
         fragmentManager: FragmentManager,
-        private val pictures: ArrayList<CatPicture>) : FragmentPagerAdapter(fragmentManager) {
+        val pictures: ArrayList<CatPicture>) : FragmentPagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment {
         return FullViewFragment.newInstance(pictures[position].getFullResUrlWithFallback()!!)

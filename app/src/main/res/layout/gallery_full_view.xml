@@ -18,4 +18,11 @@
         android:text="@string/close_icon"
         android:textSize="32dp"
         style="@style/full_view_toolbar_button"/>
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/share"
+        android:layout_alignParentRight="true"
+        android:text="@string/share_icon"
+        android:textSize="28dp"
+        style="@style/full_view_toolbar_button"/>
 </RelativeLayout>

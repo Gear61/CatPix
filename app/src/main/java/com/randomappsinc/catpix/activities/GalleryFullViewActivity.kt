@@ -2,6 +2,7 @@ package com.randomappsinc.catpix.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ShareCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import butterknife.BindView
@@ -39,6 +40,18 @@ class GalleryFullViewActivity : AppCompatActivity() {
     @OnClick(R.id.close)
     fun closePage() {
         finish()
+    }
+
+    @OnClick(R.id.share)
+    fun sharePicture() {
+        val currentPosition = picturesPager.currentItem
+        val shareIntent = ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain")
+                .setText(galleryAdapter.pictures[currentPosition].getFullResUrlWithFallback())
+                .intent
+        if (shareIntent.resolveActivity(packageManager) != null) {
+            startActivity(shareIntent)
+        }
     }
 
     override fun startActivityForResult(intent: Intent, requestCode: Int) {
