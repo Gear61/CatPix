@@ -27,11 +27,11 @@
             style="@style/cat_picture_grid_cell"/>
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/pagination_spinner"
+    <ViewStub
+        android:id="@+id/pagination_spinner_stub"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_gravity="center"
-        style="?android:attr/progressBarStyle"/>
+        android:layout="@layout/pagination_spinner"/>
 </FrameLayout>

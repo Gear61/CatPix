@@ -8,8 +8,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewStub
 import android.widget.ImageView
-import android.widget.ProgressBar
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -78,7 +78,8 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
         @BindView(R.id.picture_1) lateinit var picture1: ImageView
         @BindView(R.id.picture_2) lateinit var picture2: ImageView
         @BindView(R.id.picture_3) lateinit var picture3: ImageView
-        @BindView(R.id.pagination_spinner) lateinit var loadingSpinner: ProgressBar
+        @BindView(R.id.pagination_spinner_stub) lateinit var loadingSpinnerStub: ViewStub
+        var loadingSpinner : View? = null
 
         init {
             ButterKnife.bind(this, view)
@@ -88,9 +89,9 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
             if (position == itemCount - 1 && canFetchMore) {
                 listener.onLastItemSeen()
                 picturesRow.visibility = View.GONE
-                loadingSpinner.visibility = View.VISIBLE
+                maybeInflateSpinnerAndMakeVisible()
             } else {
-                loadingSpinner.visibility = View.GONE
+                maybeHideLoadingSpinner()
                 picturesRow.visibility = View.VISIBLE
                 val firstPosition = position * 3
                 if (firstPosition < pictures.size) {
@@ -119,6 +120,19 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
                         }
                     }
                 }
+            }
+        }
+
+        private fun maybeInflateSpinnerAndMakeVisible() {
+            if (loadingSpinner == null) {
+                loadingSpinner = loadingSpinnerStub.inflate()
+            }
+            loadingSpinner!!.visibility = View.VISIBLE
+        }
+
+        private fun maybeHideLoadingSpinner() {
+            if (loadingSpinner != null) {
+                loadingSpinner!!.visibility = View.GONE
             }
         }
 
