@@ -20,4 +20,9 @@
         My only goal is to put a smile on the face of every cat lover out there,
         which is why Cat Pix will always remain free and ad-free.
     </string>
+
+    <!-- Bottom navigation icons -->
+    <string name="home_icon">{ion-android-home}</string>
+    <string name="heart_filled_icon">{ion-ios-heart}</string>
+    <string name="settings_icon">{ion-android-settings}</string>
 </resources>
