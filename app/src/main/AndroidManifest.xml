@@ -15,7 +15,8 @@
 
         <activity
             android:name=".activities.SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:configChanges="orientation|screenSize">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -23,14 +24,18 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.MainActivity"/>
+        <activity
+            android:name=".activities.MainActivity"
+            android:configChanges="orientation|screenSize"/>
 
         <activity
             android:name=".activities.SettingsActivity"
-            android:label="@string/settings"/>
+            android:label="@string/settings"
+            android:configChanges="orientation|screenSize"/>
 
         <activity
             android:name=".activities.GalleryFullViewActivity"
-            android:theme="@style/Theme.AppCompat.Translucent"/>
+            android:theme="@style/Theme.AppCompat.Translucent"
+            android:configChanges="orientation|screenSize"/>
     </application>
 </manifest>

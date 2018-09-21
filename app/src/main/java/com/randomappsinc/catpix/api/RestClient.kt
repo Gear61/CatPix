@@ -12,8 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RestClient(private var listener: Listener) {
 
     private var catService: CatService
-    private var thumbnailUrls: List<String?>? = null
-    private var fullResUrls: List<String?>? = null
+    private var thumbnailUrls: List<CatPictureUrl>? = null
+    private var fullResUrls: List<CatPictureUrl>? = null
 
     interface Listener {
         fun onPicturesFetched(pictures: ArrayList<CatPicture>)
@@ -41,11 +41,7 @@ class RestClient(private var listener: Listener) {
                 if (response.isSuccessful) {
                     val urls = response.body()
                     if (urls != null) {
-                        val newThumbnails = ArrayList<String?>()
-                        for (urlContainer in urls) {
-                            newThumbnails.add(urlContainer.url)
-                        }
-                        thumbnailUrls = newThumbnails
+                        thumbnailUrls = response.body()
                         maybeReturnResponse()
                     } else {
                         onPictureFetchFail()
@@ -65,11 +61,7 @@ class RestClient(private var listener: Listener) {
                 if (response.isSuccessful) {
                     val urls = response.body()
                     if (urls != null) {
-                        val newFullResUrls = ArrayList<String?>()
-                        for (urlContainer in urls) {
-                            newFullResUrls.add(urlContainer.url)
-                        }
-                        fullResUrls = newFullResUrls
+                        fullResUrls = response.body()
                         maybeReturnResponse()
                     } else {
                         onPictureFetchFail()
@@ -89,13 +81,20 @@ class RestClient(private var listener: Listener) {
         if (thumbnailUrls != null && fullResUrls != null) {
             val catPictures = ArrayList<CatPicture>()
             for (i in 0 until thumbnailUrls!!.size) {
-                if (thumbnailUrls!![i] != null || fullResUrls!![i] != null) {
-                    catPictures.add(CatPicture(thumbnailUrls!![i], fullResUrls!![i]))
+                var id : String? = null
+                if (thumbnailUrls!![i].id != null) {
+                    id = thumbnailUrls!![i].id
+                } else if (fullResUrls!![i].id != null) {
+                    id = fullResUrls!![i].id
                 }
+                val hasPicture = thumbnailUrls!![i].url != null || fullResUrls!![i].url != null
+                if (id != null && hasPicture) {
+                    catPictures.add(CatPicture(id, thumbnailUrls!![i].url, fullResUrls!![i].url))
 
-                // Pre-load the high-res image if possible
-                if (fullResUrls!![i] != null) {
-                    Picasso.get().load(fullResUrls!![i]).fetch()
+                    // Pre-load the high-res image if possible
+                    if (fullResUrls!![i].url != null) {
+                        Picasso.get().load(fullResUrls!![i].url).fetch()
+                    }
                 }
             }
             thumbnailUrls = null

@@ -5,11 +5,12 @@ import android.os.Parcelable
 
 class CatPicture : Parcelable {
 
-    var thumbnailUrl: String? = null
+    var id: String? = null
+    private var thumbnailUrl: String? = null
+    private var fullResUrl: String? = null
 
-    var fullResUrl: String? = null
-
-    constructor(thumbnailUrl: String?, fullResUrl: String?) {
+    constructor(id: String?, thumbnailUrl: String?, fullResUrl: String?) {
+        this.id = id
         this.thumbnailUrl = thumbnailUrl
         this.fullResUrl = fullResUrl
     }
@@ -23,11 +24,13 @@ class CatPicture : Parcelable {
     }
 
     private constructor(`in`: Parcel) {
+        id = `in`.readString()
         thumbnailUrl = `in`.readString()
         fullResUrl = `in`.readString()
     }
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
+        dest?.writeString(id)
         dest?.writeString(thumbnailUrl)
         dest?.writeString(fullResUrl)
     }
