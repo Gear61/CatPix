@@ -14,6 +14,7 @@ import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.adapters.GalleryFullViewAdapter
 import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.persistence.database.FavoritesDataManager
+import com.randomappsinc.catpix.utils.showShortToast
 
 class GalleryFullViewActivity : AppCompatActivity() {
 
@@ -62,11 +63,12 @@ class GalleryFullViewActivity : AppCompatActivity() {
     fun toggleFavorite() {
         val catPicture = galleryAdapter.pictures[picturesPager.currentItem]
         if (isCurrentItemFavorited) {
+            showShortToast(R.string.removed_from_favorites, this)
             favoritesDataManager.removeFavorite(catPicture)
         } else {
+            showShortToast(R.string.added_to_favorites, this)
             favoritesDataManager.addFavorite(catPicture)
         }
-        isCurrentItemFavorited = !isCurrentItemFavorited
         favoriteToggle.setText(if (isCurrentItemFavorited) R.string.heart_filled_icon else R.string.heart_icon)
     }
 
