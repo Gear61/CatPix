@@ -40,17 +40,32 @@ class GalleryFullViewActivity : AppCompatActivity() {
 
         val initialPosition = intent.getIntExtra(POSITION_KEY, 0)
         picturesPager.currentItem = initialPosition
+        if (initialPosition == 0) {
+            refreshFavoritesToggle()
+        }
     }
 
-    private fun refreshFavoritesToggle(position: Int) {
-        val catPicture = galleryAdapter.pictures[position]
+    private fun refreshFavoritesToggle() {
+        val catPicture = galleryAdapter.pictures[picturesPager.currentItem]
         val isFavorited = favoritesDataManager.isPictureFavorited(catPicture)
         favoriteToggle.setText(if (isFavorited) R.string.heart_filled_icon else R.string.heart_icon)
     }
 
     @OnPageChange(R.id.pictures_pager)
     fun onImageChanged(position: Int) {
-        refreshFavoritesToggle(position)
+        refreshFavoritesToggle()
+    }
+
+    @OnClick(R.id.favorite_toggle)
+    fun toggleFavorite() {
+        val catPicture = galleryAdapter.pictures[picturesPager.currentItem]
+        val isFavoritedNow = favoriteToggle.text == getString(R.string.heart_filled_icon)
+        if (isFavoritedNow) {
+            favoritesDataManager.removeFavorite(catPicture)
+        } else {
+            favoritesDataManager.addFavorite(catPicture)
+        }
+        favoriteToggle.setText(if (!isFavoritedNow) R.string.heart_filled_icon else R.string.heart_icon)
     }
 
     @OnClick(R.id.share)
