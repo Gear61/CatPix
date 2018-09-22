@@ -69,6 +69,7 @@ class GalleryFullViewActivity : AppCompatActivity() {
             showShortToast(R.string.added_to_favorites, this)
             favoritesDataManager.addFavorite(catPicture)
         }
+        isCurrentItemFavorited = !isCurrentItemFavorited
         favoriteToggle.setText(if (isCurrentItemFavorited) R.string.heart_filled_icon else R.string.heart_icon)
     }
 
