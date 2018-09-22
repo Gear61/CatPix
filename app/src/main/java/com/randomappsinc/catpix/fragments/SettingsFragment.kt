@@ -1,21 +1,30 @@
-package com.randomappsinc.catpix.activities
+package com.randomappsinc.catpix.fragments
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v4.app.ShareCompat
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
-import android.view.MenuItem
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import butterknife.BindString
 import butterknife.BindView
 import butterknife.ButterKnife
+import butterknife.Unbinder
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.adapters.SettingsAdapter
 import com.randomappsinc.catpix.utils.showLongToast
 import com.randomappsinc.catpix.views.SimpleDividerItemDecoration
 
-class SettingsActivity : AppCompatActivity(), SettingsAdapter.ItemSelectionListener {
+class SettingsFragment : Fragment(), SettingsAdapter.ItemSelectionListener{
+
+    fun newInstance(): SettingsFragment {
+        val fragment = SettingsFragment()
+        fragment.retainInstance = true
+        return fragment
+    }
 
     companion object {
         const val SUPPORT_EMAIL = "RandomAppsInc61@gmail.com"
@@ -27,15 +36,18 @@ class SettingsActivity : AppCompatActivity(), SettingsAdapter.ItemSelectionListe
     @BindString(R.string.feedback_subject) lateinit var feedbackSubject: String
     @BindString(R.string.send_email) lateinit var sendEmail: String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.settings)
-        ButterKnife.bind(this)
+    private lateinit var unbinder: Unbinder
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val rootView = inflater.inflate(R.layout.settings, container, false)
+        unbinder = ButterKnife.bind(this, rootView)
+        return rootView
+    }
 
-        settingsOptions.addItemDecoration(SimpleDividerItemDecoration(this))
-        settingsOptions.adapter = SettingsAdapter(this, this)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        settingsOptions.addItemDecoration(SimpleDividerItemDecoration(activity!!))
+        settingsOptions.adapter = SettingsAdapter(activity!!, this)
     }
 
     override fun onItemClick(position: Int) {
@@ -49,21 +61,21 @@ class SettingsActivity : AppCompatActivity(), SettingsAdapter.ItemSelectionListe
                 return
             }
             1 -> {
-                val shareIntent = ShareCompat.IntentBuilder.from(this)
+                val shareIntent = ShareCompat.IntentBuilder.from(activity!!)
                         .setType("text/plain")
                         .setText(getString(R.string.share_app_message))
                         .intent
-                if (shareIntent.resolveActivity(packageManager) != null) {
+                if (shareIntent.resolveActivity(context!!.packageManager) != null) {
                     startActivity(shareIntent)
                 }
                 return
             }
             2 -> intent = Intent(Intent.ACTION_VIEW, Uri.parse(OTHER_APPS_URL))
             3 -> {
-                val uri = Uri.parse("market://details?id=$packageName")
+                val uri = Uri.parse("market://details?id=$context.packageName")
                 intent = Intent(Intent.ACTION_VIEW, uri)
-                if (packageManager.queryIntentActivities(intent, 0).size <= 0) {
-                    showLongToast(R.string.play_store_error, this)
+                if (context!!.packageManager.queryIntentActivities(intent, 0).size <= 0) {
+                    showLongToast(R.string.play_store_error, context)
                     return
                 }
             }
@@ -72,21 +84,8 @@ class SettingsActivity : AppCompatActivity(), SettingsAdapter.ItemSelectionListe
         startActivity(intent)
     }
 
-    override fun startActivityForResult(intent: Intent, requestCode: Int) {
-        super.startActivityForResult(intent, requestCode)
-        overridePendingTransition(R.anim.slide_left_out, R.anim.slide_left_in)
-    }
-
-    override fun finish() {
-        super.finish()
-        overridePendingTransition(R.anim.slide_right_out, R.anim.slide_right_in)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        unbinder.unbind()
     }
 }

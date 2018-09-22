@@ -29,11 +29,6 @@
             android:configChanges="orientation|screenSize"/>
 
         <activity
-            android:name=".activities.SettingsActivity"
-            android:label="@string/settings"
-            android:configChanges="orientation|screenSize"/>
-
-        <activity
             android:name=".activities.GalleryFullViewActivity"
             android:theme="@style/Theme.AppCompat.Translucent"
             android:configChanges="orientation|screenSize"/>

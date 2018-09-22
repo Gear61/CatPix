@@ -9,6 +9,8 @@ import butterknife.ButterKnife
 import com.joanzapata.iconify.Iconify
 import com.joanzapata.iconify.fonts.IoniconsModule
 import com.randomappsinc.catpix.R
+import com.randomappsinc.catpix.fragments.HomepageFragmentController
+import com.randomappsinc.catpix.persistence.PreferencesManager
 import com.randomappsinc.catpix.utils.showHomepageDialog
 import com.randomappsinc.catpix.views.BottomNavigationView
 
@@ -18,16 +20,23 @@ class MainActivity : AppCompatActivity() {
 
     private val bottomNavListener = object : BottomNavigationView.Listener {
         override fun onNavItemSelected(@IdRes viewId: Int) {
+            navigationController.onNavItemSelected(viewId)
         }
     }
+
+    private lateinit var navigationController: HomepageFragmentController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Iconify.with(IoniconsModule())
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
+
+        PreferencesManager(this).logAppOpen()
         showHomepageDialog(this)
 
+        navigationController = HomepageFragmentController(supportFragmentManager, R.id.container)
         BottomNavigationView(bottomNavigation, bottomNavListener)
+        navigationController.loadHome()
     }
 }
