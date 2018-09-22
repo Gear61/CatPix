@@ -25,4 +25,6 @@
     <string name="home_icon">{ion-android-home}</string>
     <string name="heart_filled_icon">{ion-ios-heart}</string>
     <string name="settings_icon">{ion-android-settings}</string>
+
+    <string name="heart_icon">{ion-ios-heart-outline}</string>
 </resources>

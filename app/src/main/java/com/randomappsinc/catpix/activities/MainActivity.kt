@@ -11,6 +11,7 @@ import com.joanzapata.iconify.fonts.IoniconsModule
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.fragments.HomepageFragmentController
 import com.randomappsinc.catpix.persistence.PreferencesManager
+import com.randomappsinc.catpix.persistence.database.FavoritesDataManager
 import com.randomappsinc.catpix.utils.showHomepageDialog
 import com.randomappsinc.catpix.views.BottomNavigationView
 
@@ -21,6 +22,11 @@ class MainActivity : AppCompatActivity() {
     private val bottomNavListener = object : BottomNavigationView.Listener {
         override fun onNavItemSelected(@IdRes viewId: Int) {
             navigationController.onNavItemSelected(viewId)
+            when (viewId) {
+                R.id.home -> setTitle(R.string.app_name)
+                R.id.favorites -> setTitle(R.string.favorites)
+                R.id.settings -> setTitle(R.string.settings)
+            }
         }
     }
 
@@ -29,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Iconify.with(IoniconsModule())
+        FavoritesDataManager.instance.initialize(this)
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
 

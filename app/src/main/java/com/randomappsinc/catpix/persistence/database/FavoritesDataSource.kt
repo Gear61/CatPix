@@ -88,4 +88,25 @@ class FavoritesDataSource constructor(context: Context) {
             close()
         }
     }
+
+    fun isPictureFavorited(catPicture: CatPicture): Boolean {
+        open()
+        val selection = MySQLiteHelper.COLUMN_PICTURE_ID + " = ?"
+        val selectionArgs = arrayOf(catPicture.id)
+        val cursor = database!!.query(
+                MySQLiteHelper.TABLE_NAME,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null)
+        var isFavorited = false
+        if (cursor != null) {
+            isFavorited = cursor.moveToNext()
+            cursor.close()
+        }
+        close()
+        return isFavorited
+    }
 }

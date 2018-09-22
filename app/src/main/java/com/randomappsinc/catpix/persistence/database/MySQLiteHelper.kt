@@ -25,7 +25,7 @@ class MySQLiteHelper internal constructor(context: Context)
         private const val DATABASE_VERSION = 1
 
         private const val CREATE_FAVORITES_TABLE = ("CREATE TABLE IF NOT EXISTS "
-                + TABLE_NAME + "(" + COLUMN_THUMBNAIL_URL
+                + TABLE_NAME + "(" + COLUMN_PICTURE_ID + " TEXT, " + COLUMN_THUMBNAIL_URL
                 + " TEXT, " + COLUMN_FULL_RES_URL + " TEXT, " + COLUMN_TIME_INSERTED + " INTEGER);")
     }
 }

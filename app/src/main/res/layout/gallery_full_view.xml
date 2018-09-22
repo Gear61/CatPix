@@ -25,4 +25,10 @@
         android:text="@string/share_icon"
         android:textSize="28dp"
         style="@style/full_view_toolbar_button"/>
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/favorite_toggle"
+        android:layout_toLeftOf="@id/share"
+        android:textSize="28dp"
+        style="@style/full_view_toolbar_button"/>
 </RelativeLayout>
