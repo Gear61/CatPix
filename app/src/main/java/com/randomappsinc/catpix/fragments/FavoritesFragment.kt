@@ -44,7 +44,7 @@ class FavoritesFragment : Fragment(), FavoritesDataManager.Listener, FavoritesAd
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        favoritesAdapter = FavoritesAdapter(this)
+        favoritesAdapter = FavoritesAdapter(activity!!, this)
         favoritesGrid.layoutManager = GridLayoutManager(activity!!, 3)
         favoritesGrid.adapter = favoritesAdapter
         favoritesDataManager.registerListener(this)

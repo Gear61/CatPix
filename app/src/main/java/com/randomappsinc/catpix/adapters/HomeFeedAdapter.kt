@@ -95,11 +95,11 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
                 picturesRow.visibility = View.VISIBLE
                 val firstPosition = position * 3
                 if (firstPosition < pictures.size) {
-                    loadThumbnailImage(pictures[firstPosition], picture1)
+                    loadThumbnailImage(pictures[firstPosition], picture1, placeholder)
                     if (firstPosition + 1 < pictures.size) {
-                        loadThumbnailImage(pictures[firstPosition + 1], picture2)
+                        loadThumbnailImage(pictures[firstPosition + 1], picture2, placeholder)
                         if (firstPosition + 2 < pictures.size) {
-                            loadThumbnailImage(pictures[firstPosition + 2], picture3)
+                            loadThumbnailImage(pictures[firstPosition + 2], picture3, placeholder)
                         }
                     }
                 }
