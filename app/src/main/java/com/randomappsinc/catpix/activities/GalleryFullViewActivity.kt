@@ -27,6 +27,7 @@ class GalleryFullViewActivity : AppCompatActivity() {
 
     private lateinit var galleryAdapter: GalleryFullViewAdapter
     private var favoritesDataManager = FavoritesDataManager.instance
+    private var isCurrentItemFavorited = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,24 +49,25 @@ class GalleryFullViewActivity : AppCompatActivity() {
     private fun refreshFavoritesToggle() {
         val catPicture = galleryAdapter.pictures[picturesPager.currentItem]
         val isFavorited = favoritesDataManager.isPictureFavorited(catPicture)
+        isCurrentItemFavorited = isFavorited
         favoriteToggle.setText(if (isFavorited) R.string.heart_filled_icon else R.string.heart_icon)
     }
 
     @OnPageChange(R.id.pictures_pager)
-    fun onImageChanged(position: Int) {
+    fun onImageChanged() {
         refreshFavoritesToggle()
     }
 
     @OnClick(R.id.favorite_toggle)
     fun toggleFavorite() {
         val catPicture = galleryAdapter.pictures[picturesPager.currentItem]
-        val isFavoritedNow = favoriteToggle.text == getString(R.string.heart_filled_icon)
-        if (isFavoritedNow) {
+        if (isCurrentItemFavorited) {
             favoritesDataManager.removeFavorite(catPicture)
         } else {
             favoritesDataManager.addFavorite(catPicture)
         }
-        favoriteToggle.setText(if (!isFavoritedNow) R.string.heart_filled_icon else R.string.heart_icon)
+        isCurrentItemFavorited = !isCurrentItemFavorited
+        favoriteToggle.setText(if (isCurrentItemFavorited) R.string.heart_filled_icon else R.string.heart_icon)
     }
 
     @OnClick(R.id.share)

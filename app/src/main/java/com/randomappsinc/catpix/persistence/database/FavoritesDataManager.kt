@@ -6,12 +6,12 @@ import com.randomappsinc.catpix.models.CatPicture
 class FavoritesDataManager private constructor() {
 
     interface Listener {
+        fun onFavoritesFetched(catPictures: ArrayList<CatPicture>)
+
         fun onFavoriteAdded(catPicture: CatPicture)
 
         fun onFavoriteRemoved(catPicture: CatPicture)
     }
-
-    init {}
 
     private object Holder { val INSTANCE = FavoritesDataManager() }
 
@@ -21,6 +21,14 @@ class FavoritesDataManager private constructor() {
 
     var dataSource: FavoritesDataSource? = null
     var listeners = HashSet<Listener>()
+    private val favoritesListener =
+            object : FavoritesDataSource.FavoritesFetcher {
+                override fun onFavoritesFetched(catPictures: ArrayList<CatPicture>) {
+                    for (listener in listeners) {
+                        listener.onFavoritesFetched(catPictures)
+                    }
+                }
+            }
 
     fun initialize(context: Context) {
         dataSource = FavoritesDataSource(context)
@@ -38,6 +46,10 @@ class FavoritesDataManager private constructor() {
             listener.onFavoriteRemoved(catPicture)
         }
         dataSource!!.removeFavorite(catPicture)
+    }
+
+    fun fetchFavorites() {
+        dataSource!!.fetchFavorites(favoritesListener)
     }
 
     fun registerListener(listener: Listener) {

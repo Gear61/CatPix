@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteDatabase
 import android.os.Handler
 import android.os.HandlerThread
 import com.randomappsinc.catpix.models.CatPicture
-import com.randomappsinc.catpix.utils.assertOnNonUiThread
-import java.util.*
 
 class FavoritesDataSource constructor(context: Context) {
 
@@ -33,35 +31,40 @@ class FavoritesDataSource constructor(context: Context) {
         dbHelper.close()
     }
 
-    fun fetchFavorites(): ArrayList<CatPicture> {
-        assertOnNonUiThread()
-        open()
-        val columns = arrayOf(
-                MySQLiteHelper.COLUMN_PICTURE_ID,
-                MySQLiteHelper.COLUMN_THUMBNAIL_URL,
-                MySQLiteHelper.COLUMN_FULL_RES_URL,
-                MySQLiteHelper.COLUMN_TIME_INSERTED)
-        val orderBy = MySQLiteHelper.COLUMN_TIME_INSERTED + " DESC"
-        val catPictures = ArrayList<CatPicture>()
-        val cursor = database!!.query(
-                MySQLiteHelper.TABLE_NAME,
-                columns,
-                null,
-                null,
-                null,
-                null,
-                orderBy)
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                catPictures.add(CatPicture(
-                        cursor.getString(0),
-                        cursor.getString(1),
-                        cursor.getString(2)))
+    interface FavoritesFetcher {
+        fun onFavoritesFetched(catPictures: ArrayList<CatPicture>)
+    }
+
+    fun fetchFavorites(favoritesFetcher: FavoritesFetcher) {
+        backgroundHandler.post {
+            open()
+            val columns = arrayOf(
+                    MySQLiteHelper.COLUMN_PICTURE_ID,
+                    MySQLiteHelper.COLUMN_THUMBNAIL_URL,
+                    MySQLiteHelper.COLUMN_FULL_RES_URL,
+                    MySQLiteHelper.COLUMN_TIME_INSERTED)
+            val orderBy = MySQLiteHelper.COLUMN_TIME_INSERTED + " DESC"
+            val catPictures = ArrayList<CatPicture>()
+            val cursor = database!!.query(
+                    MySQLiteHelper.TABLE_NAME,
+                    columns,
+                    null,
+                    null,
+                    null,
+                    null,
+                    orderBy)
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    catPictures.add(CatPicture(
+                            cursor.getString(0),
+                            cursor.getString(1),
+                            cursor.getString(2)))
+                }
+                cursor.close()
             }
-            cursor.close()
+            close()
+            favoritesFetcher.onFavoritesFetched(catPictures)
         }
-        close()
-        return catPictures
     }
 
     fun addFavorite(catPicture: CatPicture) {

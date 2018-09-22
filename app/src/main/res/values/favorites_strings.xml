@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="favorites">Favorites</string>
+    <string name="no_favorites">
+        Hit {ion-ios-heart-outline} on any cat picture to favorite it!
+    </string>
 </resources>
