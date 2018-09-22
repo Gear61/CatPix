@@ -16,7 +16,7 @@ import butterknife.OnClick
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.utils.Constants
-import com.squareup.picasso.Picasso
+import com.randomappsinc.catpix.utils.loadThumbnailImage
 import java.util.*
 
 class HomeFeedAdapter(var context: Context, private var listener: Listener)
@@ -95,28 +95,11 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
                 picturesRow.visibility = View.VISIBLE
                 val firstPosition = position * 3
                 if (firstPosition < pictures.size) {
-                    Picasso.get()
-                            .load(pictures[firstPosition].getThumbnailUrlWithFallback())
-                            .placeholder(placeholder)
-                            .fit()
-                            .centerCrop()
-                            .into(picture1)
-
+                    loadThumbnailImage(pictures[firstPosition], picture1)
                     if (firstPosition + 1 < pictures.size) {
-                        Picasso.get()
-                                .load(pictures[firstPosition + 1].getThumbnailUrlWithFallback())
-                                .placeholder(placeholder)
-                                .fit()
-                                .centerCrop()
-                                .into(picture2)
-
+                        loadThumbnailImage(pictures[firstPosition + 1], picture2)
                         if (firstPosition + 2 < pictures.size) {
-                            Picasso.get()
-                                    .load(pictures[firstPosition + 2].getThumbnailUrlWithFallback())
-                                    .placeholder(placeholder)
-                                    .fit()
-                                    .centerCrop()
-                                    .into(picture3)
+                            loadThumbnailImage(pictures[firstPosition + 2], picture3)
                         }
                     }
                 }

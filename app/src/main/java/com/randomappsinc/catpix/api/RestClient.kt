@@ -1,7 +1,6 @@
 package com.randomappsinc.catpix.api
 
 import com.randomappsinc.catpix.models.CatPicture
-import com.squareup.picasso.Picasso
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -90,11 +89,6 @@ class RestClient(private var listener: Listener) {
                 val hasPicture = thumbnailUrls!![i].url != null || fullResUrls!![i].url != null
                 if (id != null && hasPicture) {
                     catPictures.add(CatPicture(id, thumbnailUrls!![i].url, fullResUrls!![i].url))
-
-                    // Pre-load the high-res image if possible
-                    if (fullResUrls!![i].url != null) {
-                        Picasso.get().load(fullResUrls!![i].url).fetch()
-                    }
                 }
             }
             thumbnailUrls = null

@@ -10,7 +10,7 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.models.CatPicture
-import com.squareup.picasso.Picasso
+import com.randomappsinc.catpix.utils.loadThumbnailImage
 
 class FavoritesAdapter(private var listener: Listener)
     : RecyclerView.Adapter<FavoritesAdapter.CatPictureViewHolder>() {
@@ -70,11 +70,7 @@ class FavoritesAdapter(private var listener: Listener)
 
         fun loadItem(position: Int) {
             val catPicture = getItem(position)
-            Picasso.get()
-                    .load(catPicture.getThumbnailUrlWithFallback())
-                    .fit()
-                    .centerCrop()
-                    .into(picture)
+            loadThumbnailImage(catPicture, picture)
         }
 
         @OnClick(R.id.favorite_image)

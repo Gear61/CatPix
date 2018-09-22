@@ -11,7 +11,7 @@ class GalleryFullViewAdapter(
         val pictures: ArrayList<CatPicture>) : FragmentPagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment {
-        return FullViewFragment.newInstance(pictures[position].getFullResUrlWithFallback()!!)
+        return FullViewFragment.newInstance(pictures[position])
     }
 
     override fun getCount(): Int {

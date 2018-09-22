@@ -11,36 +11,52 @@ import android.widget.ImageView
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.joanzapata.iconify.IconDrawable
 import com.joanzapata.iconify.fonts.IoniconsIcons
 import com.randomappsinc.catpix.R
+import com.randomappsinc.catpix.models.CatPicture
+import com.randomappsinc.catpix.utils.cancelImageLoading
+import com.randomappsinc.catpix.utils.loadFullResImage
 import com.randomappsinc.catpix.utils.showLongToast
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 
 class FullViewFragment : Fragment() {
 
     companion object {
-        const val URL_KEY = "url"
+        const val CAT_PICTURE_KEY = "url"
 
-        fun newInstance(url: String): FullViewFragment {
+        fun newInstance(catPicture: CatPicture): FullViewFragment {
             val fragment = FullViewFragment()
             val bundle = Bundle()
-            bundle.putString(URL_KEY, url)
+            bundle.putParcelable(CAT_PICTURE_KEY, catPicture)
             fragment.arguments = bundle
             return fragment
         }
     }
 
-    private val imageLoadingCallback = object : Callback {
-        override fun onSuccess() {
+    private val imageLoadingCallback = object : RequestListener<Drawable> {
+        override fun onLoadFailed(
+                e: GlideException?,
+                model: Any?,
+                target: Target<Drawable>?,
+                isFirstResource: Boolean): Boolean {
+            showLongToast(R.string.image_load_fail, context)
+            return false
+        }
+
+        override fun onResourceReady(
+                resource: Drawable?,
+                model: Any?,
+                target: Target<Drawable>?,
+                dataSource: DataSource?,
+                isFirstResource: Boolean): Boolean {
             loadingSpinner.hide()
             picture.animate().alpha(1.0f).duration =
                     resources.getInteger(R.integer.default_anim_length).toLong()
-        }
-
-        override fun onError(e: Exception) {
-            showLongToast(R.string.image_load_fail, context)
+            return false
         }
     }
 
@@ -57,21 +73,14 @@ class FullViewFragment : Fragment() {
         defaultThumbnail = IconDrawable(
                 activity,
                 IoniconsIcons.ion_image).colorRes(R.color.dark_gray)
-        val url = arguments!!.getString(URL_KEY)
-
-        Picasso.get()
-                .load(url)
-                .error(defaultThumbnail)
-                .fit()
-                .centerInside()
-                .into(picture, imageLoadingCallback)
-
+        val catPicture: CatPicture = arguments!!.getParcelable(CAT_PICTURE_KEY)!!
+        loadFullResImage(catPicture, picture, imageLoadingCallback)
         return rootView
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Picasso.get().cancelRequest(picture)
+        cancelImageLoading(picture)
         unbinder!!.unbind()
     }
 }
