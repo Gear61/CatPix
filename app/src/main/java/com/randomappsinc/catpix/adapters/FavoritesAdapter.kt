@@ -1,18 +1,23 @@
 package com.randomappsinc.catpix.adapters
 
-import android.content.Context
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import android.widget.ImageView
 import butterknife.BindView
 import butterknife.ButterKnife
+import butterknife.OnClick
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.models.CatPicture
 import com.squareup.picasso.Picasso
 
-class FavoritesAdapter : BaseAdapter() {
+class FavoritesAdapter(private var listener: Listener)
+    : RecyclerView.Adapter<FavoritesAdapter.CatPictureViewHolder>() {
+
+    interface Listener {
+        fun onItemClick(position: Int)
+    }
 
     val pictures: ArrayList<CatPicture> = ArrayList()
 
@@ -23,32 +28,40 @@ class FavoritesAdapter : BaseAdapter() {
 
     fun addFavorite(catPicture: CatPicture) {
         this.pictures.add(0, catPicture)
-        notifyDataSetChanged()
+        notifyItemInserted(0)
     }
 
     fun removeFavorite(catPicture: CatPicture) {
-        for (picture in pictures) {
-            if (picture.id.equals(catPicture.id)) {
-                pictures.remove(picture)
+        for (i in 0 until pictures.size) {
+            if (pictures[i].id.equals(catPicture.id)) {
+                pictures.removeAt(i)
+                notifyItemRemoved(i)
                 break
             }
         }
-        notifyDataSetChanged()
     }
 
-    override fun getCount(): Int {
-        return pictures.size
-    }
-
-    override fun getItem(position: Int): CatPicture {
+    fun getItem(position: Int): CatPicture {
         return pictures[position]
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatPictureViewHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(
+                R.layout.cat_picture_grid_cell,
+                parent,
+                false)
+        return CatPictureViewHolder(itemView)
     }
 
-    internal inner class CatPictureViewHolder(view: View) {
+    override fun getItemCount(): Int {
+        return pictures.size
+    }
+
+    override fun onBindViewHolder(holder: CatPictureViewHolder, position: Int) {
+        holder.loadItem(position)
+    }
+
+    inner class CatPictureViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         @BindView(R.id.favorite_image) lateinit var picture: ImageView
 
         init {
@@ -63,20 +76,10 @@ class FavoritesAdapter : BaseAdapter() {
                     .centerCrop()
                     .into(picture)
         }
-    }
 
-    override fun getView(position: Int, view: View?, parent: ViewGroup): View {
-        var convertView = view
-        val holder: CatPictureViewHolder
-        if (view == null) {
-            val vi = parent.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            convertView = vi.inflate(R.layout.cat_picture_grid_cell, parent, false)
-            holder = CatPictureViewHolder(convertView!!)
-            convertView.tag = holder
-        } else {
-            holder = convertView!!.tag as CatPictureViewHolder
+        @OnClick(R.id.favorite_image)
+        fun onImageClicked() {
+            listener.onItemClick(adapterPosition)
         }
-        holder.loadItem(position)
-        return convertView
     }
 }

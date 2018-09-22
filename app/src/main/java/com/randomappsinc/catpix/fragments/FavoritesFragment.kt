@@ -4,14 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.ContentLoadingProgressBar
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridView
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
-import butterknife.OnItemClick
 import butterknife.Unbinder
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.activities.GalleryFullViewActivity
@@ -19,7 +19,7 @@ import com.randomappsinc.catpix.adapters.FavoritesAdapter
 import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.persistence.database.FavoritesDataManager
 
-class FavoritesFragment : Fragment(), FavoritesDataManager.Listener {
+class FavoritesFragment : Fragment(), FavoritesDataManager.Listener, FavoritesAdapter.Listener {
 
     fun newInstance(): FavoritesFragment {
         val fragment = FavoritesFragment()
@@ -27,7 +27,7 @@ class FavoritesFragment : Fragment(), FavoritesDataManager.Listener {
         return fragment
     }
 
-    @BindView(R.id.favorites_grid) internal lateinit var favoritesGrid: GridView
+    @BindView(R.id.favorites_grid) internal lateinit var favoritesGrid: RecyclerView
     @BindView(R.id.no_results) internal lateinit var noResults: TextView
     @BindView(R.id.favorites_spinner) internal lateinit var loadingSpinner: ContentLoadingProgressBar
 
@@ -39,14 +39,15 @@ class FavoritesFragment : Fragment(), FavoritesDataManager.Listener {
         val rootView = inflater.inflate(R.layout.favorites, container, false)
         unbinder = ButterKnife.bind(this, rootView)
         loadingSpinner.show()
-        favoritesAdapter = FavoritesAdapter()
-        favoritesGrid.adapter = favoritesAdapter
-        favoritesDataManager.registerListener(this)
         return rootView
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        favoritesAdapter = FavoritesAdapter(this)
+        favoritesGrid.layoutManager = GridLayoutManager(activity!!, 3)
+        favoritesGrid.adapter = favoritesAdapter
+        favoritesDataManager.registerListener(this)
         favoritesDataManager.fetchFavorites()
     }
 
@@ -71,14 +72,13 @@ class FavoritesFragment : Fragment(), FavoritesDataManager.Listener {
     override fun onFavoriteRemoved(catPicture: CatPicture) {
         activity!!.runOnUiThread {
             favoritesAdapter.removeFavorite(catPicture)
-            if (favoritesAdapter.count == 0) {
+            if (favoritesAdapter.itemCount == 0) {
                 noResults.visibility = View.VISIBLE
             }
         }
     }
 
-    @OnItemClick(R.id.favorites_grid)
-    fun onFavoriteClicked(position: Int) {
+    override fun onItemClick(position: Int) {
         startActivity(Intent(activity!!, GalleryFullViewActivity::class.java)
                 .putParcelableArrayListExtra(GalleryFullViewActivity.PICTURES_KEY, favoritesAdapter.pictures)
                 .putExtra(GalleryFullViewActivity.POSITION_KEY, position))
