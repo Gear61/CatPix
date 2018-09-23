@@ -5,11 +5,11 @@ import android.os.Parcelable
 
 class CatPicture : Parcelable {
 
-    var id: String? = null
+    var id: String
     private var thumbnailUrl: String? = null
     private var fullResUrl: String? = null
 
-    constructor(id: String?, thumbnailUrl: String?, fullResUrl: String?) {
+    constructor(id: String, thumbnailUrl: String?, fullResUrl: String?) {
         this.id = id
         this.thumbnailUrl = thumbnailUrl
         this.fullResUrl = fullResUrl
@@ -24,7 +24,7 @@ class CatPicture : Parcelable {
     }
 
     private constructor(`in`: Parcel) {
-        id = `in`.readString()
+        id = `in`.readString()!!
         thumbnailUrl = `in`.readString()
         fullResUrl = `in`.readString()
     }

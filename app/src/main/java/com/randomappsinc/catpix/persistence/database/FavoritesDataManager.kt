@@ -3,14 +3,16 @@ package com.randomappsinc.catpix.persistence.database
 import android.content.Context
 import com.randomappsinc.catpix.models.CatPicture
 
-class FavoritesDataManager private constructor() {
+class FavoritesDataManager private constructor() : FavoritesDataSource.FavoritesFetcher {
 
-    interface Listener {
-        fun onFavoritesFetched(catPictures: ArrayList<CatPicture>)
-
+    interface ChangeListener {
         fun onFavoriteAdded(catPicture: CatPicture)
 
         fun onFavoriteRemoved(catPicture: CatPicture)
+    }
+
+    interface FavoritesReceiver {
+        fun onFavoritesFetched(catPictures: ArrayList<CatPicture>)
     }
 
     private object Holder { val INSTANCE = FavoritesDataManager() }
@@ -19,48 +21,56 @@ class FavoritesDataManager private constructor() {
         val instance: FavoritesDataManager by lazy { Holder.INSTANCE }
     }
 
-    var dataSource: FavoritesDataSource? = null
-    var listeners = HashSet<Listener>()
-    private val favoritesListener =
-            object : FavoritesDataSource.FavoritesFetcher {
-                override fun onFavoritesFetched(catPictures: ArrayList<CatPicture>) {
-                    for (listener in listeners) {
-                        listener.onFavoritesFetched(catPictures)
-                    }
-                }
-            }
+    private var dataSource: FavoritesDataSource? = null
+    private var changeListeners = HashSet<ChangeListener>()
+    var favoriteIds = HashSet<String>()
 
     fun initialize(context: Context) {
         dataSource = FavoritesDataSource(context)
+        dataSource!!.fetchFavorites(this)
     }
 
     fun addFavorite(catPicture: CatPicture) {
-        for (listener in listeners) {
+        for (listener in changeListeners) {
             listener.onFavoriteAdded(catPicture)
         }
+        favoriteIds.add(catPicture.id)
         dataSource!!.addFavorite(catPicture)
     }
 
     fun removeFavorite(catPicture: CatPicture) {
-        for (listener in listeners) {
+        for (listener in changeListeners) {
             listener.onFavoriteRemoved(catPicture)
         }
+        favoriteIds.remove(catPicture.id)
         dataSource!!.removeFavorite(catPicture)
     }
 
-    fun fetchFavorites() {
-        dataSource!!.fetchFavorites(favoritesListener)
+    fun fetchFavorites(favoritesReceiver: FavoritesReceiver) {
+        dataSource!!.fetchFavorites(object : FavoritesDataSource.FavoritesFetcher {
+            override fun onFavoritesFetched(catPictures: ArrayList<CatPicture>) {
+                favoritesReceiver.onFavoritesFetched(catPictures)
+            }
+        })
     }
 
-    fun registerListener(listener: Listener) {
-        listeners.add(listener)
+    fun registerChangeListener(changeListener: ChangeListener) {
+        changeListeners.add(changeListener)
     }
 
-    fun unregisterListener(listener: Listener) {
-        listeners.remove(listener)
+    fun unregisterChangeListener(changeListener: ChangeListener) {
+        changeListeners.remove(changeListener)
     }
 
     fun isPictureFavorited(catPicture: CatPicture): Boolean {
-        return dataSource!!.isPictureFavorited(catPicture)
+        return favoriteIds.contains(catPicture.id)
+    }
+
+    // Called when the DB returns us a list of favorites
+    // Here, we set up our favorited IDs HashSet to give favorite status in O(1) time
+    override fun onFavoritesFetched(catPictures: ArrayList<CatPicture>) {
+        for (catPicture in catPictures) {
+            favoriteIds.add(catPicture.id)
+        }
     }
 }

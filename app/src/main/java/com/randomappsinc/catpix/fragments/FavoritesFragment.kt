@@ -19,7 +19,8 @@ import com.randomappsinc.catpix.adapters.FavoritesAdapter
 import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.persistence.database.FavoritesDataManager
 
-class FavoritesFragment : Fragment(), FavoritesDataManager.Listener, FavoritesAdapter.Listener {
+class FavoritesFragment : Fragment(), FavoritesDataManager.ChangeListener,
+        FavoritesAdapter.Listener, FavoritesDataManager.FavoritesReceiver {
 
     fun newInstance(): FavoritesFragment {
         val fragment = FavoritesFragment()
@@ -47,8 +48,8 @@ class FavoritesFragment : Fragment(), FavoritesDataManager.Listener, FavoritesAd
         favoritesAdapter = FavoritesAdapter(activity!!, this)
         favoritesGrid.layoutManager = GridLayoutManager(activity!!, 3)
         favoritesGrid.adapter = favoritesAdapter
-        favoritesDataManager.registerListener(this)
-        favoritesDataManager.fetchFavorites()
+        favoritesDataManager.registerChangeListener(this)
+        favoritesDataManager.fetchFavorites(this)
     }
 
     override fun onFavoritesFetched(catPictures: ArrayList<CatPicture>) {
@@ -87,7 +88,7 @@ class FavoritesFragment : Fragment(), FavoritesDataManager.Listener, FavoritesAd
 
     override fun onDestroyView() {
         super.onDestroyView()
-        favoritesDataManager.unregisterListener(this)
+        favoritesDataManager.unregisterChangeListener(this)
         unbinder.unbind()
     }
 }
