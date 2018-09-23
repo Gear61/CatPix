@@ -16,7 +16,8 @@ fun showHomepageDialog(activity: Activity) {
                 .message(R.string.please_rate)
                 .negativeButton(R.string.no_im_good)
                 .positiveButton(R.string.sure_will_help) {
-                    val uri = Uri.parse("market://details?id=" + activity.packageName)
+                    val packageName = activity.packageName
+                    val uri = Uri.parse("market://details?id=$packageName")
                     val intent = Intent(Intent.ACTION_VIEW, uri)
                     if (activity.packageManager.queryIntentActivities(intent, 0).size <= 0) {
                         showLongToast(R.string.play_store_error, activity)
@@ -24,6 +25,7 @@ fun showHomepageDialog(activity: Activity) {
                     }
                     activity.startActivity(intent)
                 }
+                .cancelOnTouchOutside(false)
                 .show()
     } else if (preferencesManager.shouldAskForShare()) {
         preferencesManager.rememberSharingDialogSeen()
@@ -40,6 +42,7 @@ fun showHomepageDialog(activity: Activity) {
                         activity.startActivity(shareIntent)
                     }
                 }
+                .cancelOnTouchOutside(false)
                 .show()
     }
 }

@@ -72,7 +72,8 @@ class SettingsFragment : Fragment(), SettingsAdapter.ItemSelectionListener{
             }
             2 -> intent = Intent(Intent.ACTION_VIEW, Uri.parse(OTHER_APPS_URL))
             3 -> {
-                val uri = Uri.parse("market://details?id=$context.packageName")
+                val packageName = context!!.packageName
+                val uri = Uri.parse("market://details?id=$packageName")
                 intent = Intent(Intent.ACTION_VIEW, uri)
                 if (context!!.packageManager.queryIntentActivities(intent, 0).size <= 0) {
                     showLongToast(R.string.play_store_error, context)
