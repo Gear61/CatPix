@@ -10,14 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewStub
 import android.widget.ImageView
+import android.widget.TextView
+import butterknife.BindColor
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.models.CatPicture
+import com.randomappsinc.catpix.persistence.database.FavoritesDataManager
 import com.randomappsinc.catpix.utils.Constants
 import com.randomappsinc.catpix.utils.loadThumbnailImage
-import java.util.*
 
 class HomeFeedAdapter(var context: Context, private var listener: Listener)
     : RecyclerView.Adapter<HomeFeedAdapter.PicturesRowViewHolder>() {
@@ -32,10 +34,20 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
 
     val pictures = ArrayList<CatPicture>()
     var placeholder : Drawable = ColorDrawable(ContextCompat.getColor(context, R.color.gray_300))
+    var favoritesDataManager = FavoritesDataManager.instance
+    var idToPosition = HashMap<String, Int>()
 
     fun addPicturesUrls(newPictures: List<CatPicture>) {
         val wasShowingSpinner = !pictures.isEmpty()
         val prevSize = itemCount
+
+        // Maintain picture ID -> position mapping
+        var currentPosition = pictures.size
+        for (catPicture in newPictures) {
+            idToPosition[catPicture.id] = currentPosition
+            currentPosition++
+        }
+
         if (!newPictures.isEmpty()) {
             if (newPictures.size < Constants.EXPECTED_PAGE_SIZE) {
                 canFetchMore = false
@@ -52,6 +64,13 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
             if (wasShowingSpinner) {
                 notifyItemRemoved(prevSize - 1)
             }
+        }
+    }
+
+    fun onFavoriteStatusChanged(catPicture: CatPicture) {
+        val positionToUpdate = idToPosition[catPicture.id]
+        if (positionToUpdate != null) {
+            notifyItemChanged(positionToUpdate)
         }
     }
 
@@ -78,8 +97,12 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
 
     inner class PicturesRowViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         @BindView(R.id.cat_picture) lateinit var pictureView: ImageView
+        @BindView(R.id.favorite_status) lateinit var favoriteStatus: TextView
         @BindView(R.id.pagination_spinner_stub) lateinit var loadingSpinnerStub: ViewStub
         private var loadingSpinner : View? = null
+
+        @JvmField @BindColor(R.color.light_red) var lightRed: Int = 0
+        @JvmField @BindColor(R.color.dark_gray) var darkGray: Int = 0
 
         init {
             ButterKnife.bind(this, view)
@@ -89,11 +112,22 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
             if (isPositionASpinner(position)) {
                 listener.onLastItemSeen()
                 pictureView.visibility = View.GONE
+                favoriteStatus.visibility = View.GONE
                 maybeInflateSpinnerAndMakeVisible()
             } else {
                 maybeHideLoadingSpinner()
                 pictureView.visibility = View.VISIBLE
                 loadThumbnailImage(pictures[position], pictureView, placeholder)
+                favoriteStatus.visibility = View.VISIBLE
+
+                val isFavorited = favoritesDataManager.isPictureFavorited(pictures[position])
+                if (isFavorited) {
+                    favoriteStatus.setText(R.string.heart_filled_icon)
+                    favoriteStatus.setTextColor(lightRed)
+                } else {
+                    favoriteStatus.setText(R.string.heart_icon)
+                    favoriteStatus.setTextColor(darkGray)
+                }
             }
         }
 

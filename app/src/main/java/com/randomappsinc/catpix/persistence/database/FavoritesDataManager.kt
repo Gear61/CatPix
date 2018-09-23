@@ -31,19 +31,19 @@ class FavoritesDataManager private constructor() : FavoritesDataSource.Favorites
     }
 
     fun addFavorite(catPicture: CatPicture) {
+        favoriteIds.add(catPicture.id)
+        dataSource!!.addFavorite(catPicture)
         for (listener in changeListeners) {
             listener.onFavoriteAdded(catPicture)
         }
-        favoriteIds.add(catPicture.id)
-        dataSource!!.addFavorite(catPicture)
     }
 
     fun removeFavorite(catPicture: CatPicture) {
+        favoriteIds.remove(catPicture.id)
+        dataSource!!.removeFavorite(catPicture)
         for (listener in changeListeners) {
             listener.onFavoriteRemoved(catPicture)
         }
-        favoriteIds.remove(catPicture.id)
-        dataSource!!.removeFavorite(catPicture)
     }
 
     fun fetchFavorites(favoritesReceiver: FavoritesReceiver) {

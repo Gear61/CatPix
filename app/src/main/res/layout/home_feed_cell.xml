@@ -10,6 +10,10 @@
         android:layout_height="match_parent"
         android:padding="2dp"/>
 
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/favorite_status"
+        style="@style/favorite_status_icon"/>
+
     <ViewStub
         android:id="@+id/pagination_spinner_stub"
         android:layout_width="wrap_content"

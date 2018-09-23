@@ -10,4 +10,6 @@
 
     <color name="shadow_black">#3D000000</color>
     <color name="theater_black">#212121</color>
+
+    <color name="light_red">#E57373</color>
 </resources>

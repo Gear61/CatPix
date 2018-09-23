@@ -17,10 +17,12 @@ import com.randomappsinc.catpix.adapters.HomeFeedAdapter
 import com.randomappsinc.catpix.api.RestClient
 import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.persistence.PreferencesManager
+import com.randomappsinc.catpix.persistence.database.FavoritesDataManager
 import com.randomappsinc.catpix.utils.Constants
 import com.randomappsinc.catpix.utils.showLongToast
 
-class HomeFeedFragment : Fragment(), RestClient.Listener, HomeFeedAdapter.Listener {
+class HomeFeedFragment : Fragment(), RestClient.Listener,
+        HomeFeedAdapter.Listener, FavoritesDataManager.ChangeListener {
 
     fun newInstance(): HomeFeedFragment {
         val fragment = HomeFeedFragment()
@@ -37,6 +39,7 @@ class HomeFeedFragment : Fragment(), RestClient.Listener, HomeFeedAdapter.Listen
     private var pageToFetch = 0
     private lateinit var preferencesManager : PreferencesManager
     private var unbinder: Unbinder? = null
+    private var favoritesDataManager = FavoritesDataManager.instance
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.home_feed, container, false)
@@ -46,7 +49,6 @@ class HomeFeedFragment : Fragment(), RestClient.Listener, HomeFeedAdapter.Listen
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         preferencesManager = PreferencesManager(activity!!)
         feedAdapter = HomeFeedAdapter(activity!!, this)
         catPicturesList.adapter = feedAdapter
@@ -60,6 +62,8 @@ class HomeFeedFragment : Fragment(), RestClient.Listener, HomeFeedAdapter.Listen
 
         pageToFetch = preferencesManager.nextPageToFetch
         restClient.fetchPictures(pageToFetch)
+
+        favoritesDataManager.registerChangeListener(this)
     }
 
     override fun onPicturesFetched(pictures: ArrayList<CatPicture>) {
@@ -93,6 +97,14 @@ class HomeFeedFragment : Fragment(), RestClient.Listener, HomeFeedAdapter.Listen
         }
     }
 
+    override fun onFavoriteAdded(catPicture: CatPicture) {
+        feedAdapter?.onFavoriteStatusChanged(catPicture)
+    }
+
+    override fun onFavoriteRemoved(catPicture: CatPicture) {
+        feedAdapter?.onFavoriteStatusChanged(catPicture)
+    }
+
     override fun startActivityForResult(intent: Intent, requestCode: Int) {
         super.startActivityForResult(intent, requestCode)
         activity!!.overridePendingTransition(R.anim.slide_left_out, R.anim.slide_left_in)
@@ -100,6 +112,7 @@ class HomeFeedFragment : Fragment(), RestClient.Listener, HomeFeedAdapter.Listen
 
     override fun onDestroyView() {
         super.onDestroyView()
+        favoritesDataManager.unregisterChangeListener(this)
         unbinder!!.unbind()
     }
 }
