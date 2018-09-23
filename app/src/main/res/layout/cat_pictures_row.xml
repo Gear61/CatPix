@@ -14,17 +14,41 @@
         android:paddingLeft="2dp"
         android:paddingRight="2dp">
 
-        <com.randomappsinc.catpix.views.SquareImageView
-            android:id="@+id/picture_1"
-            style="@style/cat_picture_grid_cell"/>
+        <FrameLayout
+            android:id="@+id/container_1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="2dp">
 
-        <com.randomappsinc.catpix.views.SquareImageView
-            android:id="@+id/picture_2"
-            style="@style/cat_picture_grid_cell"/>
+            <ImageView
+                android:id="@+id/picture_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </FrameLayout>
 
-        <com.randomappsinc.catpix.views.SquareImageView
-            android:id="@+id/picture_3"
-            style="@style/cat_picture_grid_cell"/>
+        <FrameLayout
+            android:id="@+id/container_2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="2dp">
+
+            <ImageView
+                android:id="@+id/picture_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/container_3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="2dp">
+
+            <ImageView
+                android:id="@+id/picture_3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </FrameLayout>
     </LinearLayout>
 
     <ViewStub

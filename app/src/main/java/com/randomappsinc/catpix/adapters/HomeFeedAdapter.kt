@@ -10,12 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewStub
 import android.widget.ImageView
+import android.widget.LinearLayout
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.utils.Constants
+import com.randomappsinc.catpix.utils.getScreenWidth
 import com.randomappsinc.catpix.utils.loadThumbnailImage
 import java.util.*
 
@@ -75,14 +77,21 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
 
     inner class PicturesRowViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         @BindView(R.id.pictures_row) lateinit var picturesRow: View
+        @BindView(R.id.container_1) lateinit var container1: View
+        @BindView(R.id.container_2) lateinit var container2: View
+        @BindView(R.id.container_3) lateinit var container3: View
         @BindView(R.id.picture_1) lateinit var picture1: ImageView
         @BindView(R.id.picture_2) lateinit var picture2: ImageView
         @BindView(R.id.picture_3) lateinit var picture3: ImageView
         @BindView(R.id.pagination_spinner_stub) lateinit var loadingSpinnerStub: ViewStub
-        var loadingSpinner : View? = null
+        private var loadingSpinner : View? = null
 
         init {
             ButterKnife.bind(this, view)
+            val dimen = getScreenWidth(view.context)/3
+            container1.layoutParams = LinearLayout.LayoutParams(dimen, dimen)
+            container2.layoutParams = LinearLayout.LayoutParams(dimen, dimen)
+            container3.layoutParams = LinearLayout.LayoutParams(dimen, dimen)
         }
 
         fun loadContent(position: Int) {
