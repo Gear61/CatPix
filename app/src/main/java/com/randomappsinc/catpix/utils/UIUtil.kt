@@ -15,8 +15,3 @@ fun showLongToast(@StringRes stringId: Int, context: Context?) {
 fun showToast(@StringRes stringId: Int, toastLength: Int, context: Context?) {
     Toast.makeText(context, stringId, toastLength).show()
 }
-
-fun getScreenWidth(context: Context): Int {
-    val metrics = context.resources.displayMetrics
-    return metrics.widthPixels
-}

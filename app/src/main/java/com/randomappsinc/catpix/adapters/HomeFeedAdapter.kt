@@ -10,14 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewStub
 import android.widget.ImageView
-import android.widget.LinearLayout
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.utils.Constants
-import com.randomappsinc.catpix.utils.getScreenWidth
 import com.randomappsinc.catpix.utils.loadThumbnailImage
 import java.util.*
 
@@ -46,8 +44,8 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
             if (wasShowingSpinner) {
                 notifyItemChanged(prevSize - 1)
             }
-            if (newPictures.size > 3) {
-                notifyItemRangeInserted(prevSize, newPictures.size / 3)
+            if (newPictures.size > 1) {
+                notifyItemRangeInserted(prevSize, newPictures.size - 1)
             }
         } else {
             canFetchMore = false
@@ -59,7 +57,7 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PicturesRowViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
-                R.layout.cat_pictures_row,
+                R.layout.home_feed_cell,
                 parent,
                 false)
         return PicturesRowViewHolder(itemView)
@@ -70,48 +68,32 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
     }
 
     override fun getItemCount(): Int {
-        val coreSize = pictures.size / 3
-        val numRows = if (pictures.size % 3 > 0) coreSize + 1 else coreSize
-        return if (canFetchMore) numRows + 1 else numRows
+        val coreSize = pictures.size
+        return if (canFetchMore) coreSize + 1 else coreSize
+    }
+
+    fun isPositionASpinner(position: Int): Boolean {
+        return position == itemCount - 1 && canFetchMore
     }
 
     inner class PicturesRowViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        @BindView(R.id.pictures_row) lateinit var picturesRow: View
-        @BindView(R.id.container_1) lateinit var container1: View
-        @BindView(R.id.container_2) lateinit var container2: View
-        @BindView(R.id.container_3) lateinit var container3: View
-        @BindView(R.id.picture_1) lateinit var picture1: ImageView
-        @BindView(R.id.picture_2) lateinit var picture2: ImageView
-        @BindView(R.id.picture_3) lateinit var picture3: ImageView
+        @BindView(R.id.cat_picture) lateinit var pictureView: ImageView
         @BindView(R.id.pagination_spinner_stub) lateinit var loadingSpinnerStub: ViewStub
         private var loadingSpinner : View? = null
 
         init {
             ButterKnife.bind(this, view)
-            val dimen = getScreenWidth(view.context)/3
-            container1.layoutParams = LinearLayout.LayoutParams(dimen, dimen)
-            container2.layoutParams = LinearLayout.LayoutParams(dimen, dimen)
-            container3.layoutParams = LinearLayout.LayoutParams(dimen, dimen)
         }
 
         fun loadContent(position: Int) {
-            if (position == itemCount - 1 && canFetchMore) {
+            if (isPositionASpinner(position)) {
                 listener.onLastItemSeen()
-                picturesRow.visibility = View.GONE
+                pictureView.visibility = View.GONE
                 maybeInflateSpinnerAndMakeVisible()
             } else {
                 maybeHideLoadingSpinner()
-                picturesRow.visibility = View.VISIBLE
-                val firstPosition = position * 3
-                if (firstPosition < pictures.size) {
-                    loadThumbnailImage(pictures[firstPosition], picture1, placeholder)
-                    if (firstPosition + 1 < pictures.size) {
-                        loadThumbnailImage(pictures[firstPosition + 1], picture2, placeholder)
-                        if (firstPosition + 2 < pictures.size) {
-                            loadThumbnailImage(pictures[firstPosition + 2], picture3, placeholder)
-                        }
-                    }
-                }
+                pictureView.visibility = View.VISIBLE
+                loadThumbnailImage(pictures[position], pictureView, placeholder)
             }
         }
 
@@ -128,19 +110,9 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
             }
         }
 
-        @OnClick(R.id.picture_1)
-        fun onFirstClicked() {
-            listener.onItemClick(adapterPosition * 3)
-        }
-
-        @OnClick(R.id.picture_2)
-        fun onSecondClicked() {
-            listener.onItemClick(adapterPosition * 3 + 1)
-        }
-
-        @OnClick(R.id.picture_3)
-        fun onThirdClicked() {
-            listener.onItemClick(adapterPosition * 3 + 2)
+        @OnClick(R.id.cat_picture)
+        fun onPictureClicked() {
+            listener.onItemClick(adapterPosition)
         }
     }
 }

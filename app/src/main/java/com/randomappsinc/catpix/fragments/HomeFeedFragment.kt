@@ -3,6 +3,7 @@ package com.randomappsinc.catpix.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -49,6 +50,13 @@ class HomeFeedFragment : Fragment(), RestClient.Listener, HomeFeedAdapter.Listen
         preferencesManager = PreferencesManager(activity!!)
         feedAdapter = HomeFeedAdapter(activity!!, this)
         catPicturesList.adapter = feedAdapter
+        val layoutManager = GridLayoutManager(activity!!, 3)
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if (feedAdapter!!.isPositionASpinner(position)) layoutManager.spanCount else 1
+            }
+        }
+        catPicturesList.layoutManager = layoutManager
 
         pageToFetch = preferencesManager.nextPageToFetch
         restClient.fetchPictures(pageToFetch)
