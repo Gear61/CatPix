@@ -67,6 +67,7 @@ class FavoritesFragment : Fragment(), FavoritesDataManager.ChangeListener,
         activity!!.runOnUiThread {
             noResults.visibility = View.GONE
             favoritesAdapter.addFavorite(catPicture)
+            favoritesGrid.scrollToPosition(0)
         }
     }
 
