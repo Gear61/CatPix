@@ -54,9 +54,9 @@
 
     <style name="favorite_status_icon">
         <item name="android:layout_gravity">top|left</item>
-        <item name="android:layout_margin">8dp</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">28dp</item>
+        <item name="android:layout_height">28dp</item>
+        <item name="android:gravity">center</item>
         <item name="android:shadowColor">@color/shadow_black</item>
         <item name="android:shadowDx">3</item>
         <item name="android:shadowDy">3</item>
