@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewStub
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
@@ -21,6 +22,7 @@ import com.randomappsinc.catpix.persistence.database.FavoritesDataManager
 import com.randomappsinc.catpix.utils.Constants
 import com.randomappsinc.catpix.utils.showLongToast
 import com.randomappsinc.catpix.utils.showShortToast
+import com.randomappsinc.catpix.views.BottomPillViewHolder
 
 class HomeFeedFragment : Fragment(), RestClient.Listener,
         HomeFeedAdapter.Listener, FavoritesDataManager.ChangeListener {
@@ -33,6 +35,7 @@ class HomeFeedFragment : Fragment(), RestClient.Listener,
 
     @BindView(R.id.skeleton_photos) lateinit var skeleton: View
     @BindView(R.id.cat_pictures_list) lateinit var catPicturesList: RecyclerView
+    @BindView(R.id.bottom_pill_stub) lateinit var bottomPillStub: ViewStub
 
     private var feedAdapter : HomeFeedAdapter? = null
     private var restClient : RestClient = RestClient(this)
@@ -41,10 +44,12 @@ class HomeFeedFragment : Fragment(), RestClient.Listener,
     private lateinit var preferencesManager : PreferencesManager
     private var unbinder: Unbinder? = null
     private var favoritesDataManager = FavoritesDataManager.instance
+    private lateinit var bottomPillViewHolder: BottomPillViewHolder
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.home_feed, container, false)
         unbinder = ButterKnife.bind(this, rootView)
+        bottomPillViewHolder = BottomPillViewHolder(bottomPillStub)
         return rootView
     }
 
@@ -68,6 +73,10 @@ class HomeFeedFragment : Fragment(), RestClient.Listener,
     }
 
     override fun onPicturesFetched(pictures: ArrayList<CatPicture>) {
+        if (preferencesManager.shouldShowTapInstructions()) {
+            preferencesManager.rememberTapInstructionsSeen()
+            bottomPillViewHolder.inflateAndShow()
+        }
         if (pictures.size < Constants.EXPECTED_PAGE_SIZE) {
             pageToFetch = 0
         } else {

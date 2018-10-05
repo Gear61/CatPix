@@ -2,6 +2,7 @@
 <resources>
     <integer name="default_anim_length">250</integer>
     <integer name="shorter_anim_length">150</integer>
+    <integer name="pill_movement_anim_length">500</integer>
 
     <integer name="skeleton_anim_length">1000</integer>
 </resources>

@@ -11,6 +11,7 @@ class PreferencesManager(context: Context) {
         private const val NUM_OPENS_KEY = "numOpens"
         private const val RATING_DIALOG_SEEN = "ratingDialogSeen"
         private const val SHARING_DIALOG_SEEN = "sharingDialogSeen"
+        private const val TAP_INSTRUCTIONS_SEEN = "tapInstructionsSeen"
 
         private const val NUM_OPENS_BEFORE_RATING_ASK = 5
         private const val NUM_OPENS_BEFORE_SHARE_ASK = 10
@@ -45,5 +46,13 @@ class PreferencesManager(context: Context) {
 
     fun rememberSharingDialogSeen() {
         prefs.edit().putBoolean(SHARING_DIALOG_SEEN, true).apply()
+    }
+
+    fun shouldShowTapInstructions(): Boolean {
+        return !prefs.getBoolean(TAP_INSTRUCTIONS_SEEN, false)
+    }
+
+    fun rememberTapInstructionsSeen() {
+        prefs.edit().putBoolean(TAP_INSTRUCTIONS_SEEN, true).apply()
     }
 }
