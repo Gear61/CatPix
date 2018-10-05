@@ -14,6 +14,7 @@ import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.adapters.GalleryFullViewAdapter
 import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.persistence.database.FavoritesDataManager
+import com.randomappsinc.catpix.utils.Constants
 import com.randomappsinc.catpix.utils.animateFavoriteToggle
 import com.randomappsinc.catpix.utils.showShortToast
 
@@ -65,13 +66,13 @@ class GalleryFullViewActivity : AppCompatActivity() {
         val catPicture = galleryAdapter.pictures[picturesPager.currentItem]
         if (isCurrentItemFavorited) {
             showShortToast(R.string.removed_from_favorites, this)
-            favoritesDataManager.removeFavorite(catPicture)
+            favoritesDataManager.removeFavorite(catPicture, Constants.FULL_VIEW)
         } else {
             showShortToast(R.string.added_to_favorites, this)
-            favoritesDataManager.addFavorite(catPicture)
+            favoritesDataManager.addFavorite(catPicture, Constants.FULL_VIEW)
         }
         isCurrentItemFavorited = !isCurrentItemFavorited
-        animateFavoriteToggle(favoriteToggle, isCurrentItemFavorited, this)
+        animateFavoriteToggle(favoriteToggle, isCurrentItemFavorited, R.color.white, R.color.white)
     }
 
     @OnClick(R.id.share)

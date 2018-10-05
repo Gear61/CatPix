@@ -3,13 +3,18 @@ package com.randomappsinc.catpix.utils
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.AnticipateOvershootInterpolator
 import android.widget.TextView
 import com.randomappsinc.catpix.R
 
-fun animateFavoriteToggle(favoriteToggle: TextView, isFavorited: Boolean, context: Context) {
+fun animateFavoriteToggle(
+        favoriteToggle: TextView,
+        isFavorited: Boolean,
+        unfavoritedColorResId: Int,
+        favoritedColorResId: Int) {
+    val context = favoriteToggle.context
     val animLength = context.resources.getInteger(R.integer.shorter_anim_length)
 
     if (favoriteToggle.animation == null || favoriteToggle.animation.hasEnded()) {
@@ -24,6 +29,10 @@ fun animateFavoriteToggle(favoriteToggle: TextView, isFavorited: Boolean, contex
 
             override fun onAnimationEnd(animation: Animator) {
                 favoriteToggle.setText(if (isFavorited) R.string.heart_filled_icon else R.string.heart_icon)
+                val finalColor = ContextCompat.getColor(
+                        context,
+                        if (isFavorited) favoritedColorResId else unfavoritedColorResId)
+                favoriteToggle.setTextColor(finalColor)
 
                 val scaleXAnimation = ObjectAnimator.ofFloat(favoriteToggle, "scaleX", 1.0f)
                 val scaleYAnimation = ObjectAnimator.ofFloat(favoriteToggle, "scaleY", 1.0f)

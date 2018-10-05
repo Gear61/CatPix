@@ -20,6 +20,7 @@ import com.randomappsinc.catpix.persistence.PreferencesManager
 import com.randomappsinc.catpix.persistence.database.FavoritesDataManager
 import com.randomappsinc.catpix.utils.Constants
 import com.randomappsinc.catpix.utils.showLongToast
+import com.randomappsinc.catpix.utils.showShortToast
 
 class HomeFeedFragment : Fragment(), RestClient.Listener,
         HomeFeedAdapter.Listener, FavoritesDataManager.ChangeListener {
@@ -90,6 +91,16 @@ class HomeFeedFragment : Fragment(), RestClient.Listener,
         activity!!.overridePendingTransition(R.anim.fade_in, 0)
     }
 
+    override fun onItemDoubleTap(catPicture: CatPicture) {
+        if (favoritesDataManager.isPictureFavorited(catPicture)) {
+            favoritesDataManager.removeFavorite(catPicture, Constants.HOME_FEED)
+            showShortToast(R.string.removed_from_favorites, context)
+        } else {
+            favoritesDataManager.addFavorite(catPicture, Constants.HOME_FEED)
+            showShortToast(R.string.added_to_favorites, context)
+        }
+    }
+
     override fun onLastItemSeen() {
         if (!fetchingNextPage) {
             fetchingNextPage = true
@@ -97,12 +108,16 @@ class HomeFeedFragment : Fragment(), RestClient.Listener,
         }
     }
 
-    override fun onFavoriteAdded(catPicture: CatPicture) {
-        feedAdapter?.onFavoriteStatusChanged(catPicture)
+    override fun onFavoriteAdded(catPicture: CatPicture, changeSource: String) {
+        if (changeSource != Constants.HOME_FEED) {
+            feedAdapter?.onFavoriteStatusChanged(catPicture)
+        }
     }
 
-    override fun onFavoriteRemoved(catPicture: CatPicture) {
-        feedAdapter?.onFavoriteStatusChanged(catPicture)
+    override fun onFavoriteRemoved(catPicture: CatPicture, changeSource: String) {
+        if (changeSource != Constants.HOME_FEED) {
+            feedAdapter?.onFavoriteStatusChanged(catPicture)
+        }
     }
 
     override fun startActivityForResult(intent: Intent, requestCode: Int) {

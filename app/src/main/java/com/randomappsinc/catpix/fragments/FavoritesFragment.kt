@@ -63,7 +63,7 @@ class FavoritesFragment : Fragment(), FavoritesDataManager.ChangeListener,
         }
     }
 
-    override fun onFavoriteAdded(catPicture: CatPicture) {
+    override fun onFavoriteAdded(catPicture: CatPicture, changeSource: String) {
         activity!!.runOnUiThread {
             noResults.visibility = View.GONE
             favoritesAdapter.addFavorite(catPicture)
@@ -71,7 +71,7 @@ class FavoritesFragment : Fragment(), FavoritesDataManager.ChangeListener,
         }
     }
 
-    override fun onFavoriteRemoved(catPicture: CatPicture) {
+    override fun onFavoriteRemoved(catPicture: CatPicture, changeSource: String) {
         activity!!.runOnUiThread {
             favoritesAdapter.removeFavorite(catPicture)
             if (favoritesAdapter.itemCount == 0) {

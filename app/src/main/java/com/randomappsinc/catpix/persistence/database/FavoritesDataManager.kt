@@ -6,9 +6,9 @@ import com.randomappsinc.catpix.models.CatPicture
 class FavoritesDataManager private constructor() : FavoritesDataSource.FavoritesFetcher {
 
     interface ChangeListener {
-        fun onFavoriteAdded(catPicture: CatPicture)
+        fun onFavoriteAdded(catPicture: CatPicture, changeSource: String)
 
-        fun onFavoriteRemoved(catPicture: CatPicture)
+        fun onFavoriteRemoved(catPicture: CatPicture, changeSource: String)
     }
 
     interface FavoritesReceiver {
@@ -30,19 +30,19 @@ class FavoritesDataManager private constructor() : FavoritesDataSource.Favorites
         dataSource!!.fetchFavorites(this)
     }
 
-    fun addFavorite(catPicture: CatPicture) {
+    fun addFavorite(catPicture: CatPicture, changeSource: String) {
         favoriteIds.add(catPicture.id)
         dataSource!!.addFavorite(catPicture)
         for (listener in changeListeners) {
-            listener.onFavoriteAdded(catPicture)
+            listener.onFavoriteAdded(catPicture, changeSource)
         }
     }
 
-    fun removeFavorite(catPicture: CatPicture) {
+    fun removeFavorite(catPicture: CatPicture, changeSource: String) {
         favoriteIds.remove(catPicture.id)
         dataSource!!.removeFavorite(catPicture)
         for (listener in changeListeners) {
-            listener.onFavoriteRemoved(catPicture)
+            listener.onFavoriteRemoved(catPicture, changeSource)
         }
     }
 
