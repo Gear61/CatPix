@@ -7,6 +7,13 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.randomappsinc.catpix.models.CatPicture
+import android.graphics.Bitmap
+import android.R.attr.y
+import android.R.attr.x
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Point
+import android.view.Display
 
 fun loadThumbnailImage(catPicture: CatPicture, imageView: ImageView, placeholder: Drawable) {
     val options = RequestOptions()
@@ -43,4 +50,27 @@ fun loadFullResImage(catPicture: CatPicture, imageView: ImageView, callback: Req
 
 fun cancelImageLoading(imageView: ImageView) {
     Glide.with(imageView).clear(imageView)
+}
+
+fun getFullscreenBitmapFromDrawable(drawable: Drawable, context: Context): Bitmap {
+    val screenWidth = context.resources.displayMetrics.widthPixels
+    val screenHeight = context.resources.displayMetrics.heightPixels
+    val imageWidth = drawable.intrinsicWidth
+    val imageHeight = drawable.intrinsicHeight
+
+    var finalWidth = screenWidth
+    var finalHeight = screenHeight
+    if (imageWidth > imageHeight) {
+        finalHeight = (screenHeight * imageHeight) / imageWidth
+    } else {
+        finalWidth = (screenWidth * imageWidth) / imageHeight
+    }
+    val mutableBitmap = Bitmap.createBitmap(
+            finalWidth,
+            finalHeight,
+            Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(mutableBitmap)
+    drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+    drawable.draw(canvas)
+    return mutableBitmap
 }

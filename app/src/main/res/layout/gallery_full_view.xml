@@ -5,6 +5,7 @@
     android:background="@color/theater_black"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:ignore="SpUsage, RtlHardcoded">
 
     <android.support.v4.view.ViewPager
@@ -29,6 +30,13 @@
     <com.joanzapata.iconify.widget.IconTextView
         android:id="@+id/favorite_toggle"
         android:layout_toLeftOf="@id/share"
+        android:textSize="28dp"
+        style="@style/full_view_toolbar_button"/>
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/set_as_wallpaper"
+        android:layout_toLeftOf="@id/favorite_toggle"
+        android:text="@string/image_icon"
         android:textSize="28dp"
         style="@style/full_view_toolbar_button"/>
 </RelativeLayout>

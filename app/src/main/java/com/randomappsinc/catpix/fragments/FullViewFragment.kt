@@ -1,5 +1,7 @@
 package com.randomappsinc.catpix.fragments
 
+import android.app.WallpaperManager
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -20,10 +22,14 @@ import com.joanzapata.iconify.fonts.IoniconsIcons
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.utils.cancelImageLoading
+import com.randomappsinc.catpix.utils.getFullscreenBitmapFromDrawable
 import com.randomappsinc.catpix.utils.loadFullResImage
 import com.randomappsinc.catpix.utils.showLongToast
+import com.randomappsinc.catpix.wallpaper.SetWallpaperManager
+import java.io.IOException
 
-class FullViewFragment : Fragment() {
+
+class FullViewFragment : Fragment(), SetWallpaperManager.SetWallpaperListener {
 
     companion object {
         const val CAT_PICTURE_KEY = "url"
@@ -53,6 +59,7 @@ class FullViewFragment : Fragment() {
                 target: Target<Drawable>?,
                 dataSource: DataSource?,
                 isFirstResource: Boolean): Boolean {
+            isPictureDoneLoading = true
             loadingSpinner.hide()
             picture.animate().alpha(1.0f).duration =
                     resources.getInteger(R.integer.default_anim_length).toLong()
@@ -63,8 +70,11 @@ class FullViewFragment : Fragment() {
     @BindView(R.id.loading_spinner) internal lateinit var loadingSpinner: ContentLoadingProgressBar
     @BindView(R.id.picture) internal lateinit var picture: ImageView
 
-    private var unbinder: Unbinder? = null
+    private var setWallpaperManager = SetWallpaperManager.instance
     private lateinit var defaultThumbnail: Drawable
+    private lateinit var catPicture: CatPicture
+    private var isPictureDoneLoading = false
+    private var unbinder: Unbinder? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.full_view_fragment, container, false)
@@ -73,9 +83,31 @@ class FullViewFragment : Fragment() {
         defaultThumbnail = IconDrawable(
                 activity,
                 IoniconsIcons.ion_image).colorRes(R.color.dark_gray)
-        val catPicture: CatPicture = arguments!!.getParcelable(CAT_PICTURE_KEY)!!
+        catPicture = arguments!!.getParcelable(CAT_PICTURE_KEY)!!
         loadFullResImage(catPicture, picture, imageLoadingCallback)
         return rootView
+    }
+
+    override fun onSetWallpaperRequest() {
+        if (isPictureDoneLoading) {
+            val drawable = picture.drawable
+            val bitmap = getFullscreenBitmapFromDrawable(drawable, context!!)
+            try {
+                val wallpaperManager = WallpaperManager.getInstance(context)
+                wallpaperManager.setBitmap(bitmap)
+            } catch (e: IOException) {
+                showLongToast(R.string.wallpaper_set_fail, context)
+            }
+        } else {
+            showLongToast(R.string.wallpaper_set_too_early, context)
+        }
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (isVisibleToUser) {
+            setWallpaperManager.setListener(this)
+        }
     }
 
     override fun onDestroyView() {

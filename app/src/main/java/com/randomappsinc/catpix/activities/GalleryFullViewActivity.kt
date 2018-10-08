@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v4.app.ShareCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import android.view.WindowManager
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -17,6 +19,7 @@ import com.randomappsinc.catpix.persistence.database.FavoritesDataManager
 import com.randomappsinc.catpix.utils.Constants
 import com.randomappsinc.catpix.utils.animateFavoriteToggle
 import com.randomappsinc.catpix.utils.showShortToast
+import com.randomappsinc.catpix.wallpaper.SetWallpaperManager
 
 class GalleryFullViewActivity : AppCompatActivity() {
 
@@ -29,10 +32,19 @@ class GalleryFullViewActivity : AppCompatActivity() {
     @BindView(R.id.favorite_toggle) internal lateinit var favoriteToggle: TextView
 
     private lateinit var galleryAdapter: GalleryFullViewAdapter
-    private var favoritesDataManager = FavoritesDataManager.instance
+    private var favoritesDataManager= FavoritesDataManager.instance
     private var isCurrentItemFavorited = false
+    private var setWallpaperManager = SetWallpaperManager.instance
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_FULLSCREEN)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.gallery_full_view)
         ButterKnife.bind(this)
@@ -59,6 +71,11 @@ class GalleryFullViewActivity : AppCompatActivity() {
     @OnPageChange(R.id.pictures_pager)
     fun onImageChanged() {
         refreshFavoritesToggle()
+    }
+
+    @OnClick(R.id.set_as_wallpaper)
+    fun setAsWallpaper() {
+        setWallpaperManager.requestSetWallpaperWithCurrentImage(this)
     }
 
     @OnClick(R.id.favorite_toggle)
