@@ -32,6 +32,7 @@
     <string name="wallpaper_set_too_early">
         Please wait until the image loads before setting it as your wallpaper.
     </string>
+    <string name="wallpaper_set_success">Wallpaper set successfully!</string>
     <string name="wallpaper_set_fail">
         We failed to set your wallpaper. Please try again later.
     </string>

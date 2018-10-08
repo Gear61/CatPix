@@ -1,13 +1,20 @@
 package com.randomappsinc.catpix.wallpaper
 
-import android.content.Context
-import com.randomappsinc.catpix.R
-import com.randomappsinc.catpix.utils.showLongToast
+import android.app.Activity
+import android.app.WallpaperManager
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.Looper
+import android.view.View
+import com.randomappsinc.catpix.utils.getScreenShot
+import java.io.IOException
 
 class SetWallpaperManager private constructor() {
 
     interface SetWallpaperListener {
-        fun onSetWallpaperRequest()
+        fun onSetWallpaperSuccess()
+
+        fun onSetWallpaperFail()
     }
 
     private object Holder { val INSTANCE = SetWallpaperManager() }
@@ -18,17 +25,56 @@ class SetWallpaperManager private constructor() {
 
     private var setWallpaperListener: SetWallpaperListener? = null
     private var isImageLoaded = false
+    private val backgroundHandler: Handler
+    private val uiHandler: Handler
 
-    fun requestSetWallpaperWithCurrentImage(context: Context) {
-
+    init {
+        val handlerThread = HandlerThread("Wallpaper Manager")
+        handlerThread.start()
+        backgroundHandler = Handler(handlerThread.looper)
+        uiHandler = Handler(Looper.getMainLooper())
     }
 
-    fun getIsImageLoaded() : Boolean {
-        return isImageLoaded
+    /**
+     * We have a variety of images with different aspect ratios and formats (gif and non-gif),
+     * so we hack the wallpaper setting by taking a screenshot of the current screen and using that.
+     */
+    fun setWallpaper(activity: Activity) {
+        backgroundHandler.post {
+            val rootView = activity.window.decorView.findViewById<View>(android.R.id.content)
+            val bitmap = getScreenShot(rootView)
+            try {
+                val wallpaperManager = WallpaperManager.getInstance(activity)
+                wallpaperManager.setBitmap(bitmap)
+                alertListenerOfSuccess()
+            } catch (e: IOException) {
+                alertListenerOfFailure()
+            }
+        }
+    }
+
+    fun alertListenerOfSuccess() {
+        uiHandler.post {
+            setWallpaperListener?.onSetWallpaperSuccess()
+        }
+    }
+
+    fun alertListenerOfFailure() {
+        uiHandler.post {
+            setWallpaperListener?.onSetWallpaperFail()
+        }
     }
 
     fun setListener(wallpaperListener: SetWallpaperListener) {
         setWallpaperListener = wallpaperListener
+    }
+
+    fun clearListener() {
+        setWallpaperListener = null
+    }
+
+    fun isImageLoaded() : Boolean {
+        return isImageLoaded
     }
 
     fun setIsImageLoaded(isImageLoaded: Boolean) {

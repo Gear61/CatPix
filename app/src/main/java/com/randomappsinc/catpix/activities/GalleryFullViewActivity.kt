@@ -1,8 +1,7 @@
 package com.randomappsinc.catpix.activities
 
-import android.app.WallpaperManager
 import android.content.Intent
-import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ShareCompat
 import android.support.v4.view.ViewPager
@@ -18,11 +17,13 @@ import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.adapters.GalleryFullViewAdapter
 import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.persistence.database.FavoritesDataManager
-import com.randomappsinc.catpix.utils.*
+import com.randomappsinc.catpix.utils.Constants
+import com.randomappsinc.catpix.utils.animateFavoriteToggle
+import com.randomappsinc.catpix.utils.showLongToast
+import com.randomappsinc.catpix.utils.showShortToast
 import com.randomappsinc.catpix.wallpaper.SetWallpaperManager
-import java.io.IOException
 
-class GalleryFullViewActivity : AppCompatActivity() {
+class GalleryFullViewActivity : AppCompatActivity(), SetWallpaperManager.SetWallpaperListener {
 
     companion object {
         const val PICTURES_KEY = "urls"
@@ -38,14 +39,6 @@ class GalleryFullViewActivity : AppCompatActivity() {
     private var setWallpaperManager = SetWallpaperManager.instance
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
-                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_FULLSCREEN)
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.gallery_full_view)
         ButterKnife.bind(this)
@@ -60,6 +53,8 @@ class GalleryFullViewActivity : AppCompatActivity() {
         if (initialPosition == 0) {
             refreshFavoritesToggle()
         }
+
+        setWallpaperManager.setListener(this)
     }
 
     private fun refreshFavoritesToggle() {
@@ -76,15 +71,10 @@ class GalleryFullViewActivity : AppCompatActivity() {
 
     @OnClick(R.id.set_as_wallpaper)
     fun setAsWallpaper() {
-        if (setWallpaperManager.getIsImageLoaded()) {
-            val rootView = window.decorView.findViewById<View>(android.R.id.content)
-            val bitmap = getScreenShot(rootView)
-            try {
-                val wallpaperManager = WallpaperManager.getInstance(this)
-                wallpaperManager.setBitmap(bitmap)
-            } catch (e: IOException) {
-                showLongToast(R.string.wallpaper_set_fail, this)
-            }
+        if (setWallpaperManager.isImageLoaded()) {
+            setWallpaperManager.setWallpaper(this)
+        } else {
+            showLongToast(R.string.wallpaper_set_too_early, this)
         }
     }
 
@@ -114,9 +104,35 @@ class GalleryFullViewActivity : AppCompatActivity() {
         }
     }
 
+    override fun onSetWallpaperSuccess() {
+        showLongToast(R.string.wallpaper_set_success, this)
+    }
+
+    override fun onSetWallpaperFail() {
+        showLongToast(R.string.wallpaper_set_fail, this)
+    }
+
     @OnClick(R.id.close)
     fun closePage() {
         finish()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+
+            var visibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_FULLSCREEN
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                visibility = visibility or View.SYSTEM_UI_FLAG_IMMERSIVE
+            }
+            window.decorView.systemUiVisibility = visibility
+        }
     }
 
     override fun startActivityForResult(intent: Intent, requestCode: Int) {
@@ -126,6 +142,7 @@ class GalleryFullViewActivity : AppCompatActivity() {
 
     override fun finish() {
         super.finish()
+        setWallpaperManager.clearListener()
         overridePendingTransition(0, R.anim.fade_out)
     }
 }

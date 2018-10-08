@@ -1,6 +1,5 @@
 package com.randomappsinc.catpix.fragments
 
-import android.app.WallpaperManager
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -21,14 +20,11 @@ import com.joanzapata.iconify.fonts.IoniconsIcons
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.utils.cancelImageLoading
-import com.randomappsinc.catpix.utils.getFullscreenBitmapFromDrawable
 import com.randomappsinc.catpix.utils.loadFullResImage
 import com.randomappsinc.catpix.utils.showLongToast
 import com.randomappsinc.catpix.wallpaper.SetWallpaperManager
-import java.io.IOException
 
-
-class FullViewFragment : Fragment(), SetWallpaperManager.SetWallpaperListener {
+class FullViewFragment : Fragment() {
 
     companion object {
         const val CAT_PICTURE_KEY = "url"
@@ -89,21 +85,6 @@ class FullViewFragment : Fragment(), SetWallpaperManager.SetWallpaperListener {
         catPicture = arguments!!.getParcelable(CAT_PICTURE_KEY)!!
         loadFullResImage(catPicture, picture, imageLoadingCallback)
         return rootView
-    }
-
-    override fun onSetWallpaperRequest() {
-        if (isPictureDoneLoading) {
-            val drawable = picture.drawable
-            val bitmap = getFullscreenBitmapFromDrawable(drawable, context!!)
-            try {
-                val wallpaperManager = WallpaperManager.getInstance(context)
-                wallpaperManager.setBitmap(bitmap)
-            } catch (e: IOException) {
-                showLongToast(R.string.wallpaper_set_fail, context)
-            }
-        } else {
-            showLongToast(R.string.wallpaper_set_too_early, context)
-        }
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {

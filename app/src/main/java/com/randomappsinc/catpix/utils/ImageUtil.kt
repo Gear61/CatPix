@@ -1,9 +1,6 @@
 package com.randomappsinc.catpix.utils
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
@@ -48,29 +45,6 @@ fun loadFullResImage(catPicture: CatPicture, imageView: ImageView, callback: Req
 
 fun cancelImageLoading(imageView: ImageView) {
     Glide.with(imageView).clear(imageView)
-}
-
-fun getFullscreenBitmapFromDrawable(drawable: Drawable, context: Context): Bitmap {
-    val screenWidth = context.resources.displayMetrics.widthPixels
-    val screenHeight = context.resources.displayMetrics.heightPixels
-    val imageWidth = drawable.intrinsicWidth
-    val imageHeight = drawable.intrinsicHeight
-
-    var finalWidth = screenWidth
-    var finalHeight = screenHeight
-    if (imageWidth > imageHeight) {
-        finalHeight = (screenHeight * imageHeight) / imageWidth
-    } else {
-        finalWidth = (screenWidth * imageWidth) / imageHeight
-    }
-    val mutableBitmap = Bitmap.createBitmap(
-            finalWidth,
-            finalHeight,
-            Bitmap.Config.ARGB_8888)
-    val canvas = Canvas(mutableBitmap)
-    drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
-    drawable.draw(canvas)
-    return mutableBitmap
 }
 
 fun getScreenShot(view: View): Bitmap {
