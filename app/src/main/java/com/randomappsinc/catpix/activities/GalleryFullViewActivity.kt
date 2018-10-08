@@ -1,6 +1,8 @@
 package com.randomappsinc.catpix.activities
 
+import android.app.WallpaperManager
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v4.app.ShareCompat
 import android.support.v4.view.ViewPager
@@ -16,10 +18,9 @@ import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.adapters.GalleryFullViewAdapter
 import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.persistence.database.FavoritesDataManager
-import com.randomappsinc.catpix.utils.Constants
-import com.randomappsinc.catpix.utils.animateFavoriteToggle
-import com.randomappsinc.catpix.utils.showShortToast
+import com.randomappsinc.catpix.utils.*
 import com.randomappsinc.catpix.wallpaper.SetWallpaperManager
+import java.io.IOException
 
 class GalleryFullViewActivity : AppCompatActivity() {
 
@@ -75,7 +76,16 @@ class GalleryFullViewActivity : AppCompatActivity() {
 
     @OnClick(R.id.set_as_wallpaper)
     fun setAsWallpaper() {
-        setWallpaperManager.requestSetWallpaperWithCurrentImage(this)
+        if (setWallpaperManager.getIsImageLoaded()) {
+            val rootView = window.decorView.findViewById<View>(android.R.id.content)
+            val bitmap = getScreenShot(rootView)
+            try {
+                val wallpaperManager = WallpaperManager.getInstance(this)
+                wallpaperManager.setBitmap(bitmap)
+            } catch (e: IOException) {
+                showLongToast(R.string.wallpaper_set_fail, this)
+            }
+        }
     }
 
     @OnClick(R.id.favorite_toggle)

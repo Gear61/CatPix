@@ -1,7 +1,6 @@
 package com.randomappsinc.catpix.fragments
 
 import android.app.WallpaperManager
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -60,6 +59,9 @@ class FullViewFragment : Fragment(), SetWallpaperManager.SetWallpaperListener {
                 dataSource: DataSource?,
                 isFirstResource: Boolean): Boolean {
             isPictureDoneLoading = true
+            if (isCurrentlyVisibleFragment) {
+                setWallpaperManager.setIsImageLoaded(true)
+            }
             loadingSpinner.hide()
             picture.animate().alpha(1.0f).duration =
                     resources.getInteger(R.integer.default_anim_length).toLong()
@@ -74,6 +76,7 @@ class FullViewFragment : Fragment(), SetWallpaperManager.SetWallpaperListener {
     private lateinit var defaultThumbnail: Drawable
     private lateinit var catPicture: CatPicture
     private var isPictureDoneLoading = false
+    private var isCurrentlyVisibleFragment = false
     private var unbinder: Unbinder? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -105,8 +108,9 @@ class FullViewFragment : Fragment(), SetWallpaperManager.SetWallpaperListener {
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
+        isCurrentlyVisibleFragment = isVisibleToUser
         if (isVisibleToUser) {
-            setWallpaperManager.setListener(this)
+            setWallpaperManager.setIsImageLoaded(isPictureDoneLoading)
         }
     }
 

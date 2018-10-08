@@ -17,12 +17,21 @@ class SetWallpaperManager private constructor() {
     }
 
     private var setWallpaperListener: SetWallpaperListener? = null
+    private var isImageLoaded = false
 
     fun requestSetWallpaperWithCurrentImage(context: Context) {
-        setWallpaperListener?.onSetWallpaperRequest() ?: showLongToast(R.string.wallpaper_set_fail, context)
+
+    }
+
+    fun getIsImageLoaded() : Boolean {
+        return isImageLoaded
     }
 
     fun setListener(wallpaperListener: SetWallpaperListener) {
         setWallpaperListener = wallpaperListener
+    }
+
+    fun setIsImageLoaded(isImageLoaded: Boolean) {
+        this.isImageLoaded = isImageLoaded
     }
 }
