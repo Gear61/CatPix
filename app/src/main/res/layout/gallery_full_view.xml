@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/theater_black"
@@ -13,30 +13,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <com.joanzapata.iconify.widget.IconTextView
-        android:id="@+id/close"
-        android:layout_alignParentLeft="true"
-        android:text="@string/close_icon"
-        android:textSize="32dp"
-        style="@style/full_view_toolbar_button"/>
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <com.joanzapata.iconify.widget.IconTextView
-        android:id="@+id/share"
-        android:layout_alignParentRight="true"
-        android:text="@string/share_icon"
-        android:textSize="28dp"
-        style="@style/full_view_toolbar_button"/>
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/close"
+            android:layout_alignParentLeft="true"
+            android:text="@string/close_icon"
+            android:textSize="32dp"
+            style="@style/full_view_toolbar_button"/>
 
-    <com.joanzapata.iconify.widget.IconTextView
-        android:id="@+id/favorite_toggle"
-        android:layout_toLeftOf="@id/share"
-        android:textSize="28dp"
-        style="@style/full_view_toolbar_button"/>
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/share"
+            android:layout_alignParentRight="true"
+            android:text="@string/share_icon"
+            android:textSize="28dp"
+            style="@style/full_view_toolbar_button"/>
 
-    <com.joanzapata.iconify.widget.IconTextView
-        android:id="@+id/set_as_wallpaper"
-        android:layout_toLeftOf="@id/favorite_toggle"
-        android:text="@string/image_icon"
-        android:textSize="28dp"
-        style="@style/full_view_toolbar_button"/>
-</RelativeLayout>
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/favorite_toggle"
+            android:layout_toLeftOf="@id/share"
+            android:textSize="28dp"
+            style="@style/full_view_toolbar_button"/>
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/set_as_wallpaper"
+            android:layout_toLeftOf="@id/favorite_toggle"
+            android:text="@string/image_icon"
+            android:textSize="28dp"
+            style="@style/full_view_toolbar_button"/>
+    </RelativeLayout>
+</FrameLayout>

@@ -1,5 +1,7 @@
 package com.randomappsinc.catpix.activities
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -28,8 +30,10 @@ class GalleryFullViewActivity : AppCompatActivity(), SetWallpaperManager.SetWall
     companion object {
         const val PICTURES_KEY = "urls"
         const val POSITION_KEY = "position"
+        const val FADE_ANIMATION_LENGTH = 250L
     }
 
+    @BindView(R.id.toolbar) internal lateinit var toolbar: View
     @BindView(R.id.pictures_pager) internal lateinit var picturesPager: ViewPager
     @BindView(R.id.favorite_toggle) internal lateinit var favoriteToggle: TextView
 
@@ -37,6 +41,8 @@ class GalleryFullViewActivity : AppCompatActivity(), SetWallpaperManager.SetWall
     private var favoritesDataManager= FavoritesDataManager.instance
     private var isCurrentItemFavorited = false
     private var setWallpaperManager = SetWallpaperManager.instance
+    private lateinit var fadeInAnimation: ObjectAnimator
+    private lateinit var fadeOutAnimation: ObjectAnimator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +61,22 @@ class GalleryFullViewActivity : AppCompatActivity(), SetWallpaperManager.SetWall
         }
 
         setWallpaperManager.setListener(this)
+
+        fadeInAnimation = ObjectAnimator.ofFloat(toolbar, "alpha", 0f)
+        fadeInAnimation.duration = FADE_ANIMATION_LENGTH
+        fadeInAnimation.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator) {}
+
+            override fun onAnimationEnd(animation: Animator) {
+                setWallpaperAfterAnimation()
+            }
+
+            override fun onAnimationCancel(animation: Animator) {}
+
+            override fun onAnimationRepeat(animation: Animator) {}
+        })
+        fadeOutAnimation = ObjectAnimator.ofFloat(toolbar, "alpha", 1.0f)
+        fadeOutAnimation.duration = FADE_ANIMATION_LENGTH
     }
 
     private fun refreshFavoritesToggle() {
@@ -70,7 +92,11 @@ class GalleryFullViewActivity : AppCompatActivity(), SetWallpaperManager.SetWall
     }
 
     @OnClick(R.id.set_as_wallpaper)
-    fun setAsWallpaper() {
+    fun setAsWallpaperClicked() {
+        fadeInAnimation.start()
+    }
+
+    fun setWallpaperAfterAnimation() {
         if (setWallpaperManager.isImageLoaded()) {
             setWallpaperManager.setWallpaper(this)
         } else {
@@ -105,6 +131,7 @@ class GalleryFullViewActivity : AppCompatActivity(), SetWallpaperManager.SetWall
     }
 
     override fun onSetWallpaperSuccess() {
+        fadeOutAnimation.start()
         showLongToast(R.string.wallpaper_set_success, this)
     }
 
