@@ -37,5 +37,7 @@
         We failed to set your wallpaper. Please try again later.
     </string>
 
+    <string name="setting_your_wallpaper">Setting wallpaper&#8230;</string>
+
     <string name="tap_instructions">Tap to open in full view. Double tap to favorite.</string>
 </resources>

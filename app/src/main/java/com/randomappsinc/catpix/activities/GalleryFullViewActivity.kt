@@ -15,6 +15,8 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.OnPageChange
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.adapters.GalleryFullViewAdapter
 import com.randomappsinc.catpix.models.CatPicture
@@ -41,8 +43,9 @@ class GalleryFullViewActivity : AppCompatActivity(), SetWallpaperManager.SetWall
     private var favoritesDataManager= FavoritesDataManager.instance
     private var isCurrentItemFavorited = false
     private var setWallpaperManager = SetWallpaperManager.instance
-    private lateinit var fadeInAnimation: ObjectAnimator
     private lateinit var fadeOutAnimation: ObjectAnimator
+    private lateinit var fadeInAnimation: ObjectAnimator
+    private lateinit var progressDialog: MaterialDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,9 +65,9 @@ class GalleryFullViewActivity : AppCompatActivity(), SetWallpaperManager.SetWall
 
         setWallpaperManager.setListener(this)
 
-        fadeInAnimation = ObjectAnimator.ofFloat(toolbar, "alpha", 0f)
-        fadeInAnimation.duration = FADE_ANIMATION_LENGTH
-        fadeInAnimation.addListener(object : Animator.AnimatorListener {
+        fadeOutAnimation = ObjectAnimator.ofFloat(toolbar, "alpha", 0f)
+        fadeOutAnimation.duration = FADE_ANIMATION_LENGTH
+        fadeOutAnimation.addListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {}
 
             override fun onAnimationEnd(animation: Animator) {
@@ -75,8 +78,12 @@ class GalleryFullViewActivity : AppCompatActivity(), SetWallpaperManager.SetWall
 
             override fun onAnimationRepeat(animation: Animator) {}
         })
-        fadeOutAnimation = ObjectAnimator.ofFloat(toolbar, "alpha", 1.0f)
-        fadeOutAnimation.duration = FADE_ANIMATION_LENGTH
+        fadeInAnimation = ObjectAnimator.ofFloat(toolbar, "alpha", 1.0f)
+        fadeInAnimation.duration = FADE_ANIMATION_LENGTH
+
+        progressDialog = MaterialDialog(this)
+                .customView(R.layout.setting_wallpaper, null, false)
+                .cancelable(false)
     }
 
     private fun refreshFavoritesToggle() {
@@ -93,15 +100,16 @@ class GalleryFullViewActivity : AppCompatActivity(), SetWallpaperManager.SetWall
 
     @OnClick(R.id.set_as_wallpaper)
     fun setAsWallpaperClicked() {
-        fadeInAnimation.start()
-    }
-
-    fun setWallpaperAfterAnimation() {
         if (setWallpaperManager.isImageLoaded()) {
-            setWallpaperManager.setWallpaper(this)
+            progressDialog.show()
+            fadeOutAnimation.start()
         } else {
             showLongToast(R.string.wallpaper_set_too_early, this)
         }
+    }
+
+    fun setWallpaperAfterAnimation() {
+        setWallpaperManager.setWallpaper(this, R.id.gallery_parent)
     }
 
     @OnClick(R.id.favorite_toggle)
@@ -131,8 +139,9 @@ class GalleryFullViewActivity : AppCompatActivity(), SetWallpaperManager.SetWall
     }
 
     override fun onSetWallpaperSuccess() {
-        fadeOutAnimation.start()
-        showLongToast(R.string.wallpaper_set_success, this)
+        progressDialog.dismiss()
+        fadeInAnimation.start()
+        showShortToast(R.string.wallpaper_set_success, this)
     }
 
     override fun onSetWallpaperFail() {

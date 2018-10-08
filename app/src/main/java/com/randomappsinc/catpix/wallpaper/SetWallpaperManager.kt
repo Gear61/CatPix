@@ -39,9 +39,9 @@ class SetWallpaperManager private constructor() {
      * We have a variety of images with different aspect ratios and formats (gif and non-gif),
      * so we hack the wallpaper setting by taking a screenshot of the current screen and using that.
      */
-    fun setWallpaper(activity: Activity) {
+    fun setWallpaper(activity: Activity, rootId: Int) {
         backgroundHandler.post {
-            val rootView = activity.window.decorView.findViewById<View>(android.R.id.content)
+            val rootView = activity.window.decorView.findViewById<View>(rootId)
             val bitmap = getScreenShot(rootView)
             try {
                 val wallpaperManager = WallpaperManager.getInstance(activity)
