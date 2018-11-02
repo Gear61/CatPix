@@ -3,15 +3,15 @@ package com.randomappsinc.catpix.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewStub
+import android.support.v7.widget.Toolbar
+import android.view.*
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
+import com.joanzapata.iconify.fonts.IoniconsIcons
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.activities.GalleryFullViewActivity
 import com.randomappsinc.catpix.adapters.HomeFeedAdapter
@@ -20,6 +20,7 @@ import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.persistence.PreferencesManager
 import com.randomappsinc.catpix.persistence.database.FavoritesDataManager
 import com.randomappsinc.catpix.utils.Constants
+import com.randomappsinc.catpix.utils.loadMenuIcon
 import com.randomappsinc.catpix.utils.showLongToast
 import com.randomappsinc.catpix.utils.showShortToast
 import com.randomappsinc.catpix.views.BottomPillViewHolder
@@ -33,6 +34,7 @@ class HomeFeedFragment : Fragment(), RestClient.Listener,
         return fragment
     }
 
+    @BindView(R.id.toolbar) lateinit var toolbar: Toolbar
     @BindView(R.id.skeleton_photos) lateinit var skeleton: View
     @BindView(R.id.cat_pictures_list) lateinit var catPicturesList: RecyclerView
     @BindView(R.id.bottom_pill_stub) lateinit var bottomPillStub: ViewStub
@@ -55,6 +57,10 @@ class HomeFeedFragment : Fragment(), RestClient.Listener,
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        toolbar.setTitle(R.string.app_name)
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        setHasOptionsMenu(true)
+
         preferencesManager = PreferencesManager(activity!!)
         feedAdapter = HomeFeedAdapter(activity!!, this)
         catPicturesList.adapter = feedAdapter
@@ -138,5 +144,20 @@ class HomeFeedFragment : Fragment(), RestClient.Listener,
         super.onDestroyView()
         favoritesDataManager.unregisterChangeListener(this)
         unbinder!!.unbind()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater!!.inflate(R.menu.menu_main, menu)
+        loadMenuIcon(menu!!, R.id.filter, IoniconsIcons.ion_funnel, context!!)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            R.id.filter -> {
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

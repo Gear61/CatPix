@@ -1,26 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/favorites_grid"
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="2dp"
-        android:clipToPadding="false"/>
+        android:layout_below="@id/toolbar">
 
-    <com.joanzapata.iconify.widget.IconTextView
-        android:id="@+id/no_results"
-        android:text="@string/no_favorites"
-        style="@style/no_content"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/favorites_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="2dp"
+            android:clipToPadding="false"/>
 
-    <android.support.v4.widget.ContentLoadingProgressBar
-        android:id="@+id/favorites_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_gravity="center"
-        style="?android:attr/progressBarStyle"/>
-</FrameLayout>
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/no_results"
+            android:text="@string/no_favorites"
+            style="@style/no_content"/>
+
+        <android.support.v4.widget.ContentLoadingProgressBar
+            android:id="@+id/favorites_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_gravity="center"
+            style="?android:attr/progressBarStyle"/>
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/toolbar"
+        android:background="@drawable/toolbar_shadow"/>
+</RelativeLayout>

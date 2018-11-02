@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.ContentLoadingProgressBar
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +30,7 @@ class FavoritesFragment : Fragment(), FavoritesDataManager.ChangeListener,
         return fragment
     }
 
+    @BindView(R.id.toolbar) lateinit var toolbar: Toolbar
     @BindView(R.id.favorites_grid) internal lateinit var favoritesGrid: RecyclerView
     @BindView(R.id.no_results) internal lateinit var noResults: TextView
     @BindView(R.id.favorites_spinner) internal lateinit var loadingSpinner: ContentLoadingProgressBar
@@ -45,6 +48,10 @@ class FavoritesFragment : Fragment(), FavoritesDataManager.ChangeListener,
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        toolbar.setTitle(R.string.favorites)
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        setHasOptionsMenu(true)
+
         favoritesAdapter = FavoritesAdapter(activity!!, this)
         favoritesGrid.layoutManager = GridLayoutManager(activity!!, 3)
         favoritesGrid.adapter = favoritesAdapter

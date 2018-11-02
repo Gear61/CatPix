@@ -5,7 +5,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.ShareCompat
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +34,7 @@ class SettingsFragment : Fragment(), SettingsAdapter.ItemSelectionListener{
         const val REPO_URL = "https://github.com/Gear61/CatPix"
     }
 
+    @BindView(R.id.toolbar) lateinit var toolbar: Toolbar
     @BindView(R.id.settings_options) lateinit var settingsOptions: RecyclerView
     @BindString(R.string.feedback_subject) lateinit var feedbackSubject: String
     @BindString(R.string.send_email) lateinit var sendEmail: String
@@ -46,6 +49,10 @@ class SettingsFragment : Fragment(), SettingsAdapter.ItemSelectionListener{
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        toolbar.setTitle(R.string.settings)
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        setHasOptionsMenu(true)
+
         settingsOptions.addItemDecoration(SimpleDividerItemDecoration(activity!!))
         settingsOptions.adapter = SettingsAdapter(activity!!, this)
     }
