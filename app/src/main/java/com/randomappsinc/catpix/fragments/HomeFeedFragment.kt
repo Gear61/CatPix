@@ -145,19 +145,4 @@ class HomeFeedFragment : Fragment(), RestClient.Listener,
         favoritesDataManager.unregisterChangeListener(this)
         unbinder!!.unbind()
     }
-
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater!!.inflate(R.menu.menu_main, menu)
-        loadMenuIcon(menu!!, R.id.filter, IoniconsIcons.ion_funnel, context!!)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
-            R.id.filter -> {
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
 }

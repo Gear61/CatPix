@@ -2,7 +2,7 @@
 <resources>
     <string name="favorites">Favorites</string>
     <string name="no_favorites">
-        Tap the {ion-ios-heart-outline} on any cat picture to favorite it!
+        Double tap on any cat picture or use the {ion-ios-heart-outline} button to favorite it!
     </string>
     <string name="added_to_favorites">Added to favorites</string>
     <string name="removed_from_favorites">Removed from favorites</string>
