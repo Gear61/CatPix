@@ -7,11 +7,13 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewStub
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
-import com.joanzapata.iconify.fonts.IoniconsIcons
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.activities.GalleryFullViewActivity
 import com.randomappsinc.catpix.adapters.HomeFeedAdapter
@@ -20,7 +22,6 @@ import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.persistence.PreferencesManager
 import com.randomappsinc.catpix.persistence.database.FavoritesDataManager
 import com.randomappsinc.catpix.utils.Constants
-import com.randomappsinc.catpix.utils.loadMenuIcon
 import com.randomappsinc.catpix.utils.showLongToast
 import com.randomappsinc.catpix.utils.showShortToast
 import com.randomappsinc.catpix.views.BottomPillViewHolder

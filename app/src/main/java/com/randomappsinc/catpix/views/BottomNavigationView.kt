@@ -1,7 +1,10 @@
 package com.randomappsinc.catpix.views
 
+import android.content.Context
 import android.support.annotation.IdRes
+import android.util.AttributeSet
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import butterknife.BindColor
 import butterknife.BindView
@@ -9,23 +12,31 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.randomappsinc.catpix.R
 
-class BottomNavigationView(parent: View, private val listener: Listener) {
+class BottomNavigationView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0)
+    : LinearLayout(context, attrs, defStyle) {
 
     @BindView(R.id.home) lateinit var homeButton: TextView
     @BindView(R.id.favorites) lateinit var favoritesButton: TextView
     @BindView(R.id.settings) lateinit var settingsButton: TextView
-    @BindColor(R.color.dark_gray) @JvmField var darkGray: Int = 0
-    @BindColor(R.color.app_teal) @JvmField var red: Int = 0
-    private var currentlySelected: TextView
+    @JvmField @BindColor(R.color.dark_gray) var darkGray: Int = 0
+    @JvmField @BindColor(R.color.app_teal) var teal: Int = 0
+
+    private var listener: Listener? = null
+    private var currentlySelected: TextView? = null
 
     interface Listener {
         fun onNavItemSelected(@IdRes viewId: Int)
     }
 
     init {
-        ButterKnife.bind(this, parent)
+        View.inflate(getContext(), R.layout.bottom_navigation, this)
+        ButterKnife.bind(this)
         currentlySelected = homeButton
-        homeButton.setTextColor(red)
+        homeButton.setTextColor(teal)
+    }
+
+    fun setListener(listener: Listener) {
+        this.listener = listener
     }
 
     @OnClick(R.id.home)
@@ -34,34 +45,33 @@ class BottomNavigationView(parent: View, private val listener: Listener) {
             return
         }
 
-        currentlySelected.setTextColor(darkGray)
+        currentlySelected!!.setTextColor(darkGray)
         currentlySelected = homeButton
-        homeButton.setTextColor(red)
-        listener.onNavItemSelected(R.id.home)
+        homeButton.setTextColor(teal)
+        listener!!.onNavItemSelected(R.id.home)
     }
 
-
     @OnClick(R.id.favorites)
-    fun onFavoritesClicked() {
+    fun onSearchClicked() {
         if (currentlySelected === favoritesButton) {
             return
         }
 
-        currentlySelected.setTextColor(darkGray)
-        favoritesButton.setTextColor(red)
+        currentlySelected!!.setTextColor(darkGray)
+        favoritesButton.setTextColor(teal)
         currentlySelected = favoritesButton
-        listener.onNavItemSelected(R.id.favorites)
+        listener!!.onNavItemSelected(R.id.favorites)
     }
 
     @OnClick(R.id.settings)
-    fun onSettingsClicked() {
+    fun onProfileClicked() {
         if (currentlySelected === settingsButton) {
             return
         }
 
-        currentlySelected.setTextColor(darkGray)
-        settingsButton.setTextColor(red)
+        currentlySelected!!.setTextColor(darkGray)
+        settingsButton.setTextColor(teal)
         currentlySelected = settingsButton
-        listener.onNavItemSelected(R.id.settings)
+        listener!!.onNavItemSelected(R.id.settings)
     }
 }

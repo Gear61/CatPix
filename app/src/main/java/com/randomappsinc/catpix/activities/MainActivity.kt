@@ -15,20 +15,9 @@ import com.randomappsinc.catpix.persistence.database.FavoritesDataManager
 import com.randomappsinc.catpix.utils.showHomepageDialog
 import com.randomappsinc.catpix.views.BottomNavigationView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BottomNavigationView.Listener {
 
-    @BindView(R.id.bottom_navigation) lateinit var bottomNavigation: View
-
-    private val bottomNavListener = object : BottomNavigationView.Listener {
-        override fun onNavItemSelected(@IdRes viewId: Int) {
-            navigationController.onNavItemSelected(viewId)
-            when (viewId) {
-                R.id.home -> setTitle(R.string.app_name)
-                R.id.favorites -> setTitle(R.string.favorites)
-                R.id.settings -> setTitle(R.string.settings)
-            }
-        }
-    }
+    @BindView(R.id.bottom_navigation) lateinit var bottomNavigation: BottomNavigationView
 
     private lateinit var navigationController: HomepageFragmentController
 
@@ -43,7 +32,16 @@ class MainActivity : AppCompatActivity() {
         showHomepageDialog(this)
 
         navigationController = HomepageFragmentController(supportFragmentManager, R.id.container)
-        BottomNavigationView(bottomNavigation, bottomNavListener)
+        bottomNavigation.setListener(this)
         navigationController.loadHome()
+    }
+
+    override fun onNavItemSelected(@IdRes viewId: Int) {
+        navigationController.onNavItemSelected(viewId)
+        when (viewId) {
+            R.id.home -> setTitle(R.string.app_name)
+            R.id.favorites -> setTitle(R.string.favorites)
+            R.id.settings -> setTitle(R.string.settings)
+        }
     }
 }

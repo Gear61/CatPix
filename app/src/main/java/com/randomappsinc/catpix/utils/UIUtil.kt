@@ -2,7 +2,6 @@ package com.randomappsinc.catpix.utils
 
 import android.content.Context
 import android.support.annotation.StringRes
-import android.support.v4.content.ContextCompat
 import android.view.Menu
 import android.widget.Toast
 import com.joanzapata.iconify.Icon

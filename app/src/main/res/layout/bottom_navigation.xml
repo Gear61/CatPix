@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/home"
+            android:text="@string/home_icon"
+            style="@style/bottom_navigation_item"/>
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/favorites"
+            android:text="@string/heart_filled_icon"
+            style="@style/bottom_navigation_item"/>
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/settings"
+            android:text="@string/settings_icon"
+            style="@style/bottom_navigation_item"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/bottom_nav_shadow"/>
+</FrameLayout>
