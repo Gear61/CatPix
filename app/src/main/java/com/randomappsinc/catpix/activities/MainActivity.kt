@@ -3,7 +3,6 @@ package com.randomappsinc.catpix.activities
 import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.joanzapata.iconify.Iconify
