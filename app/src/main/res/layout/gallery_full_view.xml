@@ -7,37 +7,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:ignore="SpUsage, RtlHardcoded">
+    tools:ignore="SpUsage, RtlHardcoded"
+    >
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/pictures_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        />
 
     <RelativeLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/close"
             android:layout_alignParentLeft="true"
             android:text="@string/close_icon"
             android:textSize="32dp"
-            style="@style/full_view_toolbar_button"/>
+            style="@style/full_view_toolbar_button"
+            />
 
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/share"
             android:layout_alignParentRight="true"
             android:text="@string/share_icon"
             android:textSize="28dp"
-            style="@style/full_view_toolbar_button"/>
+            style="@style/full_view_toolbar_button"
+            />
 
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/favorite_toggle"
             android:layout_toLeftOf="@id/share"
             android:textSize="28dp"
-            style="@style/full_view_toolbar_button"/>
+            style="@style/full_view_toolbar_button"
+            />
 
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/set_as_wallpaper"

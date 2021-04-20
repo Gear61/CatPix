@@ -3,19 +3,22 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/theater_black"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/picture"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0"/>
+        android:alpha="0"
+        />
 
-    <android.support.v4.widget.ContentLoadingProgressBar
+    <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/loading_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_gravity="center"
-        style="?android:attr/progressBarStyle"/>
+        style="?android:attr/progressBarStyle"
+        />
 </FrameLayout>
