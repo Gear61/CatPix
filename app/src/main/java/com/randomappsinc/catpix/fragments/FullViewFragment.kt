@@ -53,9 +53,7 @@ class FullViewFragment : Fragment() {
                 dataSource: DataSource?,
                 isFirstResource: Boolean): Boolean {
             isPictureDoneLoading = true
-            if (isCurrentlyVisibleFragment) {
-                setWallpaperManager.setIsImageLoaded(true)
-            }
+            setWallpaperManager.setIsImageLoaded(true)
             loadingSpinner.hide()
             picture.animate().alpha(1.0f).duration =
                     resources.getInteger(R.integer.default_anim_length).toLong()
@@ -70,7 +68,6 @@ class FullViewFragment : Fragment() {
     private lateinit var defaultThumbnail: Drawable
     private lateinit var catPicture: CatPicture
     private var isPictureDoneLoading = false
-    private var isCurrentlyVisibleFragment = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.full_view_fragment, container, false)
@@ -88,7 +85,6 @@ class FullViewFragment : Fragment() {
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-        isCurrentlyVisibleFragment = isVisibleToUser
         if (isVisibleToUser) {
             setWallpaperManager.setIsImageLoaded(isPictureDoneLoading)
         }
