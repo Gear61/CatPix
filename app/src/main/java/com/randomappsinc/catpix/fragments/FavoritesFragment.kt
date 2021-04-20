@@ -28,18 +28,21 @@ class FavoritesFragment : Fragment(), FavoritesDataManager.ChangeListener,
         return fragment
     }
 
-    @BindView(R.id.toolbar) lateinit var toolbar: Toolbar
-    @BindView(R.id.favorites_grid) internal lateinit var favoritesGrid: RecyclerView
-    @BindView(R.id.no_results) internal lateinit var noResults: TextView
-    @BindView(R.id.favorites_spinner) internal lateinit var loadingSpinner: ContentLoadingProgressBar
+    private lateinit var toolbar: Toolbar
+    private lateinit var favoritesGrid: RecyclerView
+    private lateinit var noResults: TextView
+    private lateinit var loadingSpinner: ContentLoadingProgressBar
 
     private lateinit var favoritesAdapter: FavoritesAdapter
-    private lateinit var unbinder: Unbinder
     private val favoritesDataManager = FavoritesDataManager.instance
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.favorites, container, false)
-        unbinder = ButterKnife.bind(this, rootView)
+        toolbar = rootView.findViewById(R.id.toolbar)
+        favoritesGrid = rootView.findViewById(R.id.favorites_grid)
+        noResults = rootView.findViewById(R.id.no_results)
+        loadingSpinner = rootView.findViewById(R.id.favorites_spinner)
+
         loadingSpinner.show()
         return rootView
     }
@@ -95,6 +98,5 @@ class FavoritesFragment : Fragment(), FavoritesDataManager.ChangeListener,
     override fun onDestroyView() {
         super.onDestroyView()
         favoritesDataManager.unregisterChangeListener(this)
-        unbinder.unbind()
     }
 }

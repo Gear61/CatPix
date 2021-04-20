@@ -9,10 +9,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindColor
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnTouch
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.persistence.database.FavoritesDataManager
@@ -98,18 +94,19 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
 
     inner class PictureViewHolder(view: View) : RecyclerView.ViewHolder(view),
             GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
-        @BindView(R.id.cat_picture) lateinit var pictureView: ImageView
-        @BindView(R.id.favorite_status) lateinit var favoriteStatus: TextView
-        @BindView(R.id.pagination_spinner_stub) lateinit var loadingSpinnerStub: ViewStub
+        private var pictureView: ImageView = view.findViewById(R.id.cat_picture)
+        private var favoriteStatus: TextView = view.findViewById(R.id.favorite_status)
+        private var loadingSpinnerStub: ViewStub = view.findViewById(R.id.pagination_spinner_stub)
         private var loadingSpinner : View? = null
-        private var gestureDetector: GestureDetectorCompat
+        private var gestureDetector: GestureDetectorCompat = GestureDetectorCompat(context, this)
 
-        @JvmField @BindColor(R.color.light_red) var lightRed: Int = 0
-        @JvmField @BindColor(R.color.dark_gray) var darkGray: Int = 0
+        private var lightRed: Int = ContextCompat.getColor(view.context, R.color.light_red)
+        private var darkGray: Int = ContextCompat.getColor(view.context, R.color.dark_gray)
 
         init {
-            ButterKnife.bind(this, view)
-            gestureDetector = GestureDetectorCompat(context, this)
+            pictureView.setOnTouchListener { view, motionEvent ->
+                gestureDetector.onTouchEvent(motionEvent)
+            }
         }
 
         fun loadContent(position: Int) {
@@ -146,11 +143,6 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
             if (loadingSpinner != null) {
                 loadingSpinner!!.visibility = View.GONE
             }
-        }
-
-        @OnTouch(R.id.cat_picture)
-        fun onCatPictureTouched(motionEvent: MotionEvent) : Boolean {
-            return gestureDetector.onTouchEvent(motionEvent)
         }
 
         override fun onDoubleTap(p0: MotionEvent?): Boolean {

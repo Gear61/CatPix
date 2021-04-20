@@ -6,9 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.randomappsinc.catpix.R
 
 class SettingsAdapter(context: Context, private var itemSelectionListener: ItemSelectionListener)
@@ -38,21 +35,19 @@ class SettingsAdapter(context: Context, private var itemSelectionListener: ItemS
     }
 
     inner class SettingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        @BindView(R.id.settings_icon) lateinit var icon: TextView
-        @BindView(R.id.settings_option) lateinit var option: TextView
+        private var icon: TextView = view.findViewById(R.id.settings_icon)
+        private var option: TextView = view.findViewById(R.id.settings_option)
 
         init {
             ButterKnife.bind(this, view)
+            view.setOnClickListener {
+                itemSelectionListener.onItemClick(adapterPosition)
+            }
         }
 
         fun loadSetting(position: Int) {
             icon.text = icons[position]
             option.text = options[position]
-        }
-
-        @OnClick(R.id.settings_parent)
-        fun onSettingSelected() {
-            itemSelectionListener.onItemClick(adapterPosition)
         }
     }
 }

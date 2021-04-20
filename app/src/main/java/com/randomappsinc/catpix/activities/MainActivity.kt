@@ -3,8 +3,6 @@ package com.randomappsinc.catpix.activities
 import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.joanzapata.iconify.Iconify
 import com.joanzapata.iconify.fonts.IoniconsModule
 import com.randomappsinc.catpix.R
@@ -16,8 +14,7 @@ import com.randomappsinc.catpix.views.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.Listener {
 
-    @BindView(R.id.bottom_navigation) lateinit var bottomNavigation: BottomNavigationView
-
+    private lateinit var bottomNavigation: BottomNavigationView
     private lateinit var navigationController: HomepageFragmentController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +22,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.Listener {
         Iconify.with(IoniconsModule())
         FavoritesDataManager.instance.initialize(this)
         setContentView(R.layout.activity_main)
-        ButterKnife.bind(this)
+
+        bottomNavigation = findViewById(R.id.bottom_navigation)
 
         PreferencesManager(this).logAppOpen()
         showHomepageDialog(this)

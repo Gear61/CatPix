@@ -9,9 +9,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.models.CatPicture
 import com.randomappsinc.catpix.utils.loadThumbnailImage
@@ -67,20 +64,17 @@ class FavoritesAdapter(var context: Context, private var listener: Listener)
     }
 
     inner class CatPictureViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        @BindView(R.id.favorite_image) lateinit var picture: ImageView
+        private var picture: ImageView = view.findViewById(R.id.favorite_image)
 
         init {
-            ButterKnife.bind(this, view)
+            view.setOnClickListener {
+                listener.onItemClick(adapterPosition)
+            }
         }
 
         fun loadItem(position: Int) {
             val catPicture = getItem(position)
             loadThumbnailImage(catPicture, picture, placeholder)
-        }
-
-        @OnClick(R.id.favorite_image)
-        fun onImageClicked() {
-            listener.onItemClick(adapterPosition)
         }
     }
 }
