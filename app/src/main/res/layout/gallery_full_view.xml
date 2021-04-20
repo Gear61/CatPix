@@ -44,6 +44,7 @@
             android:layout_toLeftOf="@id/favorite_toggle"
             android:text="@string/image_icon"
             android:textSize="28dp"
-            style="@style/full_view_toolbar_button"/>
+            style="@style/full_view_toolbar_button"
+            />
     </RelativeLayout>
 </FrameLayout>

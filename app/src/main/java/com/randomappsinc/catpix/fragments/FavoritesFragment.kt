@@ -12,9 +12,7 @@ import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
+
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.activities.GalleryFullViewActivity
 import com.randomappsinc.catpix.adapters.FavoritesAdapter

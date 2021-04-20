@@ -11,10 +11,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
 import androidx.viewpager.widget.ViewPager
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
-import butterknife.OnPageChange
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.randomappsinc.catpix.R
@@ -35,9 +31,9 @@ class GalleryFullViewActivity : AppCompatActivity(), SetWallpaperManager.SetWall
         const val FADE_ANIMATION_LENGTH = 250L
     }
 
-    @BindView(R.id.toolbar) internal lateinit var toolbar: View
-    @BindView(R.id.pictures_pager) internal lateinit var picturesPager: ViewPager
-    @BindView(R.id.favorite_toggle) internal lateinit var favoriteToggle: TextView
+    private lateinit var toolbar: View
+    private lateinit var picturesPager: ViewPager
+    private lateinit var favoriteToggle: TextView
 
     private lateinit var galleryAdapter: GalleryFullViewAdapter
     private var favoritesDataManager= FavoritesDataManager.instance
@@ -50,7 +46,56 @@ class GalleryFullViewActivity : AppCompatActivity(), SetWallpaperManager.SetWall
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.gallery_full_view)
-        ButterKnife.bind(this)
+
+        toolbar = findViewById(R.id.toolbar)
+        picturesPager = findViewById(R.id.pictures_pager)
+        picturesPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {}
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+            override fun onPageSelected(position: Int) {
+                refreshFavoritesToggle()
+            }
+        })
+
+        favoriteToggle = findViewById(R.id.favorite_toggle)
+        favoriteToggle.setOnClickListener {
+            val catPicture = galleryAdapter.pictures[picturesPager.currentItem]
+            if (isCurrentItemFavorited) {
+                showShortToast(R.string.removed_from_favorites, this)
+                favoritesDataManager.removeFavorite(catPicture, Constants.FULL_VIEW)
+            } else {
+                showShortToast(R.string.added_to_favorites, this)
+                favoritesDataManager.addFavorite(catPicture, Constants.FULL_VIEW)
+            }
+            isCurrentItemFavorited = !isCurrentItemFavorited
+            animateFavoriteToggle(favoriteToggle, isCurrentItemFavorited, R.color.white, R.color.white)
+        }
+
+        findViewById<View>(R.id.set_as_wallpaper).setOnClickListener {
+            if (setWallpaperManager.isImageLoaded()) {
+                progressDialog.show()
+                fadeOutAnimation.start()
+            } else {
+                showLongToast(R.string.wallpaper_set_too_early, this)
+            }
+        }
+
+        findViewById<View>(R.id.share).setOnClickListener {
+            val currentPosition = picturesPager.currentItem
+            val shareIntent = ShareCompat.IntentBuilder.from(this)
+                    .setType("text/plain")
+                    .setText(galleryAdapter.pictures[currentPosition].getFullResUrlWithFallback())
+                    .intent
+            if (shareIntent.resolveActivity(packageManager) != null) {
+                startActivity(shareIntent)
+            }
+        }
+
+        findViewById<View>(R.id.close).setOnClickListener {
+            finish()
+        }
 
         val pictures = intent.getParcelableArrayListExtra<CatPicture>(PICTURES_KEY)
         galleryAdapter = GalleryFullViewAdapter(supportFragmentManager, pictures!!)
@@ -93,49 +138,8 @@ class GalleryFullViewActivity : AppCompatActivity(), SetWallpaperManager.SetWall
         favoriteToggle.setText(if (isFavorited) R.string.heart_filled_icon else R.string.heart_icon)
     }
 
-    @OnPageChange(R.id.pictures_pager)
-    fun onImageChanged() {
-        refreshFavoritesToggle()
-    }
-
-    @OnClick(R.id.set_as_wallpaper)
-    fun setAsWallpaperClicked() {
-        if (setWallpaperManager.isImageLoaded()) {
-            progressDialog.show()
-            fadeOutAnimation.start()
-        } else {
-            showLongToast(R.string.wallpaper_set_too_early, this)
-        }
-    }
-
     fun setWallpaperAfterAnimation() {
         setWallpaperManager.setWallpaper(this, R.id.gallery_parent)
-    }
-
-    @OnClick(R.id.favorite_toggle)
-    fun toggleFavorite() {
-        val catPicture = galleryAdapter.pictures[picturesPager.currentItem]
-        if (isCurrentItemFavorited) {
-            showShortToast(R.string.removed_from_favorites, this)
-            favoritesDataManager.removeFavorite(catPicture, Constants.FULL_VIEW)
-        } else {
-            showShortToast(R.string.added_to_favorites, this)
-            favoritesDataManager.addFavorite(catPicture, Constants.FULL_VIEW)
-        }
-        isCurrentItemFavorited = !isCurrentItemFavorited
-        animateFavoriteToggle(favoriteToggle, isCurrentItemFavorited, R.color.white, R.color.white)
-    }
-
-    @OnClick(R.id.share)
-    fun sharePicture() {
-        val currentPosition = picturesPager.currentItem
-        val shareIntent = ShareCompat.IntentBuilder.from(this)
-                .setType("text/plain")
-                .setText(galleryAdapter.pictures[currentPosition].getFullResUrlWithFallback())
-                .intent
-        if (shareIntent.resolveActivity(packageManager) != null) {
-            startActivity(shareIntent)
-        }
     }
 
     override fun onSetWallpaperSuccess() {
@@ -146,11 +150,6 @@ class GalleryFullViewActivity : AppCompatActivity(), SetWallpaperManager.SetWall
 
     override fun onSetWallpaperFail() {
         showLongToast(R.string.wallpaper_set_fail, this)
-    }
-
-    @OnClick(R.id.close)
-    fun closePage() {
-        finish()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

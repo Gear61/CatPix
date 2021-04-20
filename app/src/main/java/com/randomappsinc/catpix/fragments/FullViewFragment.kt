@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
+
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
@@ -65,19 +63,20 @@ class FullViewFragment : Fragment() {
         }
     }
 
-    @BindView(R.id.loading_spinner) internal lateinit var loadingSpinner: ContentLoadingProgressBar
-    @BindView(R.id.picture) internal lateinit var picture: ImageView
+    private lateinit var loadingSpinner: ContentLoadingProgressBar
+    private lateinit var picture: ImageView
 
     private var setWallpaperManager = SetWallpaperManager.instance
     private lateinit var defaultThumbnail: Drawable
     private lateinit var catPicture: CatPicture
     private var isPictureDoneLoading = false
     private var isCurrentlyVisibleFragment = false
-    private var unbinder: Unbinder? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.full_view_fragment, container, false)
-        unbinder = ButterKnife.bind(this, rootView)
+        loadingSpinner = rootView.findViewById(R.id.loading_spinner)
+        picture = rootView.findViewById(R.id.picture)
+
         loadingSpinner.show()
         defaultThumbnail = IconDrawable(
                 activity,
@@ -98,6 +97,5 @@ class FullViewFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         cancelImageLoading(picture)
-        unbinder!!.unbind()
     }
 }

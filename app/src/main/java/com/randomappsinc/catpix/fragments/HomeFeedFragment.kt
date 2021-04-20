@@ -11,9 +11,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.activities.GalleryFullViewActivity
 import com.randomappsinc.catpix.adapters.HomeFeedAdapter
@@ -35,23 +32,25 @@ class HomeFeedFragment : Fragment(), RestClient.Listener,
         return fragment
     }
 
-    @BindView(R.id.toolbar) lateinit var toolbar: Toolbar
-    @BindView(R.id.skeleton_photos) lateinit var skeleton: View
-    @BindView(R.id.cat_pictures_list) lateinit var catPicturesList: RecyclerView
-    @BindView(R.id.bottom_pill_stub) lateinit var bottomPillStub: ViewStub
+    private lateinit var toolbar: Toolbar
+    private lateinit var skeleton: View
+    private lateinit var catPicturesList: RecyclerView
+    private lateinit var bottomPillStub: ViewStub
 
     private var feedAdapter : HomeFeedAdapter? = null
     private var restClient : RestClient = RestClient(this)
     private var fetchingNextPage = false
     private var pageToFetch = 0
     private lateinit var preferencesManager : PreferencesManager
-    private var unbinder: Unbinder? = null
     private var favoritesDataManager = FavoritesDataManager.instance
     private lateinit var bottomPillViewHolder: BottomPillViewHolder
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.home_feed, container, false)
-        unbinder = ButterKnife.bind(this, rootView)
+        toolbar = rootView.findViewById(R.id.toolbar)
+        skeleton = rootView.findViewById(R.id.skeleton_photos)
+        catPicturesList = rootView.findViewById(R.id.cat_pictures_list)
+        bottomPillStub = rootView.findViewById(R.id.bottom_pill_stub)
         bottomPillViewHolder = BottomPillViewHolder(bottomPillStub)
         return rootView
     }
@@ -144,6 +143,5 @@ class HomeFeedFragment : Fragment(), RestClient.Listener,
     override fun onDestroyView() {
         super.onDestroyView()
         favoritesDataManager.unregisterChangeListener(this)
-        unbinder!!.unbind()
     }
 }

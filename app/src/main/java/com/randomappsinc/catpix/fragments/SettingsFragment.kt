@@ -12,9 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindString
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
+
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.adapters.SettingsAdapter
 import com.randomappsinc.catpix.utils.showLongToast
