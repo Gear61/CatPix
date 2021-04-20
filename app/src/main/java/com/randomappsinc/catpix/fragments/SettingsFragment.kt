@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindString
 
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.adapters.SettingsAdapter
@@ -32,16 +31,18 @@ class SettingsFragment : Fragment(), SettingsAdapter.ItemSelectionListener{
         const val REPO_URL = "https://github.com/Gear61/CatPix"
     }
 
-    @BindView(R.id.toolbar) lateinit var toolbar: Toolbar
-    @BindView(R.id.settings_options) lateinit var settingsOptions: RecyclerView
-    @BindString(R.string.feedback_subject) lateinit var feedbackSubject: String
-    @BindString(R.string.send_email) lateinit var sendEmail: String
-
-    private lateinit var unbinder: Unbinder
+    private lateinit var toolbar: Toolbar
+    private lateinit var settingsOptions: RecyclerView
+    private lateinit var feedbackSubject: String
+    private lateinit var sendEmail: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.settings, container, false)
-        unbinder = ButterKnife.bind(this, rootView)
+        toolbar = rootView.findViewById(R.id.toolbar)
+        settingsOptions = rootView.findViewById(R.id.settings_option)
+
+        feedbackSubject = getString(R.string.feedback_subject)
+        sendEmail = getString(R.string.send_email)
         return rootView
     }
 
@@ -88,10 +89,5 @@ class SettingsFragment : Fragment(), SettingsAdapter.ItemSelectionListener{
             4 -> intent = Intent(Intent.ACTION_VIEW, Uri.parse(REPO_URL))
         }
         startActivity(intent)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        unbinder.unbind()
     }
 }

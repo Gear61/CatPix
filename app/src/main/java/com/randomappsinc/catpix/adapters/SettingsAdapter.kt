@@ -39,7 +39,6 @@ class SettingsAdapter(context: Context, private var itemSelectionListener: ItemS
         private var option: TextView = view.findViewById(R.id.settings_option)
 
         init {
-            ButterKnife.bind(this, view)
             view.setOnClickListener {
                 itemSelectionListener.onItemClick(adapterPosition)
             }
