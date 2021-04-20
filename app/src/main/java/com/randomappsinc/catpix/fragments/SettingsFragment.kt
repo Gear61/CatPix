@@ -39,7 +39,7 @@ class SettingsFragment : Fragment(), SettingsAdapter.ItemSelectionListener{
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.settings, container, false)
         toolbar = rootView.findViewById(R.id.toolbar)
-        settingsOptions = rootView.findViewById(R.id.settings_option)
+        settingsOptions = rootView.findViewById(R.id.settings_options)
 
         feedbackSubject = getString(R.string.feedback_subject)
         sendEmail = getString(R.string.send_email)
