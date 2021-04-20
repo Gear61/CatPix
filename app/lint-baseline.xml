@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="5" by="lint 4.1.3">
+
+    <issue
+        id="GradleCompatible"
+        message="Version 28 (intended for Android Pie and below) is the last version of the legacy support library, so we recommend that you migrate to AndroidX libraries when using Android Q and moving forward. The IDE can help with this: Refactor > Migrate to AndroidX...">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleCompatible"
+        message="Version 28 (intended for Android Pie and below) is the last version of the legacy support library, so we recommend that you migrate to AndroidX libraries when using Android Q and moving forward. The IDE can help with this: Refactor > Migrate to AndroidX...">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleCompatible"
+        message="Version 28 (intended for Android Pie and below) is the last version of the legacy support library, so we recommend that you migrate to AndroidX libraries when using Android Q and moving forward. The IDE can help with this: Refactor > Migrate to AndroidX...">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `android:foreground` has no effect on API levels lower than 23 (current min is 16)">
+        <location
+            file="src/main/res/layout/bottom_pill.xml"
+            line="13"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `android:foreground` has no effect on API levels lower than 23 (current min is 16)">
+        <location
+            file="src/main/res/layout/settings_item_cell.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/views/BottomNavigationView.kt"
+            line="18"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/views/BottomNavigationView.kt"
+            line="19"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/views/BottomNavigationView.kt"
+            line="20"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/views/BottomNavigationView.kt"
+            line="21"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/views/BottomNavigationView.kt"
+            line="22"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/views/BottomNavigationView.kt"
+            line="42"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/views/BottomNavigationView.kt"
+            line="54"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/views/BottomNavigationView.kt"
+            line="66"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/activities/GalleryFullViewActivity.kt"
+            line="38"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/activities/GalleryFullViewActivity.kt"
+            line="39"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/activities/GalleryFullViewActivity.kt"
+            line="40"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/activities/GalleryFullViewActivity.kt"
+            line="96"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/activities/GalleryFullViewActivity.kt"
+            line="101"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/activities/GalleryFullViewActivity.kt"
+            line="115"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/activities/GalleryFullViewActivity.kt"
+            line="129"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/activities/GalleryFullViewActivity.kt"
+            line="151"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/activities/MainActivity.kt"
+            line="19"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/fragments/SettingsFragment.kt"
+            line="37"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/fragments/SettingsFragment.kt"
+            line="38"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/fragments/SettingsFragment.kt"
+            line="39"/>
+    </issue>
+
+    <issue
+        id="NonConstantResourceId"
+        message="Resource IDs will be non-final in Android Gradle Plugin version 5.0, avoid using them as annotation attributes">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/fragments/SettingsFragment.kt"
+            line="40"/>
+    </issue>
+
+    <issue
+        id="QueryPermissionsNeeded"
+        message="Consider adding a `&lt;queries>` declaration to your manifest when calling this \&#xA;method; see https://g.co/dev/packagevisibility for details">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/activities/GalleryFullViewActivity.kt"
+            line="136"/>
+    </issue>
+
+    <issue
+        id="QueryPermissionsNeeded"
+        message="Consider adding a `&lt;queries>` declaration to your manifest when calling this \&#xA;method; see https://g.co/dev/packagevisibility for details">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/fragments/SettingsFragment.kt"
+            line="75"/>
+    </issue>
+
+    <issue
+        id="QueryPermissionsNeeded"
+        message="Consider adding a `&lt;queries>` declaration to your manifest when calling this \&#xA;method; see https://g.co/dev/packagevisibility for details">
+        <location
+            file="src/main/java/com/randomappsinc/catpix/fragments/SettingsFragment.kt"
+            line="85"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.jakewharton:butterknife than 8.8.1 is available: 10.2.0">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.jakewharton:butterknife-compiler than 8.8.1 is available: 10.2.0">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.squareup.retrofit2:converter-gson than 2.4.0 is available: 2.9.0">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.squareup.retrofit2:retrofit than 2.4.0 is available: 2.9.0">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="SpUsage"
+        message="Should use &quot;`sp`&quot; instead of &quot;`dp`&quot; for text sizes">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="37"/>
+    </issue>
+
+    <issue
+        id="SpUsage"
+        message="Should use &quot;`sp`&quot; instead of &quot;`dp`&quot; for text sizes">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="63"/>
+    </issue>
+
+    <issue
+        id="AllowBackup"
+        message="On SDK version 23 and up, your app data will be automatically backed up and restored on app install. Consider adding the attribute `android:fullBackupContent` to specify an `@xml` resource which configures which files to backup. More info: https://developer.android.com/training/backup/autosyncapi.html">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="9"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@color/theater_black` with a theme that also paints a background (inferred theme is `@style/AppTheme`)">
+        <location
+            file="src/main/res/layout/full_view_fragment.xml"
+            line="4"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@color/app_teal` with a theme that also paints a background (inferred theme is `@style/AppTheme`)">
+        <location
+            file="src/main/res/layout/toolbar.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.bottom_pill` appears to be unused">
+        <location
+            file="src/main/res/layout/bottom_pill.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.cat_picture_grid_cell` appears to be unused">
+        <location
+            file="src/main/res/layout/cat_picture_grid_cell.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.gray_100` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.light_red` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="14"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.anim.fade_in` appears to be unused">
+        <location
+            file="src/main/res/anim/fade_in.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.favorites` appears to be unused">
+        <location
+            file="src/main/res/layout/favorites.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.no_favorites` appears to be unused">
+        <location
+            file="src/main/res/values/favorites_strings.xml"
+            line="4"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.filter` appears to be unused">
+        <location
+            file="src/main/res/values/filter_strings.xml"
+            line="3"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.full_view_fragment` appears to be unused">
+        <location
+            file="src/main/res/layout/full_view_fragment.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.home_feed` appears to be unused">
+        <location
+            file="src/main/res/layout/home_feed.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.home_feed_cell` appears to be unused">
+        <location
+            file="src/main/res/layout/home_feed_cell.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_launcher_background` appears to be unused">
+        <location
+            file="src/main/res/drawable/ic_launcher_background.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_launcher_foreground` appears to be unused">
+        <location
+            file="src/main/res/drawable-v24/ic_launcher_foreground.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.integer.shorter_anim_length` appears to be unused">
+        <location
+            file="src/main/res/values/integers.xml"
+            line="4"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.integer.skeleton_anim_length` appears to be unused">
+        <location
+            file="src/main/res/values/integers.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.menu.menu_main` appears to be unused">
+        <location
+            file="src/main/res/menu/menu_main.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.pagination_spinner` appears to be unused">
+        <location
+            file="src/main/res/layout/pagination_spinner.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.settings_item_cell` appears to be unused">
+        <location
+            file="src/main/res/layout/settings_item_cell.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.send_feedback` appears to be unused">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.share_this_app` appears to be unused">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="6"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.my_other_apps` appears to be unused">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.rate_this_app` appears to be unused">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.source_code` appears to be unused">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="9"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.array.settings_options` appears to be unused">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="10"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.email_icon` appears to be unused">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="22"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.android_icon` appears to be unused">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="24"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.rate_icon` appears to be unused">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="25"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.github_icon` appears to be unused">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="26"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.array.settings_icons` appears to be unused">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="27"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.skeleton_grid` appears to be unused">
+        <location
+            file="src/main/res/layout/skeleton_grid.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.anim.slide_right_in` appears to be unused">
+        <location
+            file="src/main/res/anim/slide_right_in.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.anim.slide_right_out` appears to be unused">
+        <location
+            file="src/main/res/anim/slide_right_out.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.image_load_fail` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.failed_to_fetch_cats` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.please_rate` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="9"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.sure_will_help` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="14"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.no_im_good` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="15"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.share_prompt_title` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="17"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.please_share` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="18"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.tap_instructions` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="42"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.cat_pictures_row` appears to be unused">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.cat_picture_grid_cell` appears to be unused">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="10"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.skeleton_cat_picture_grid_cell` appears to be unused">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="17"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.no_content` appears to be unused">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="41"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.favorite_status_icon` appears to be unused">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="54"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.teal_pill` appears to be unused">
+        <location
+            file="src/main/res/drawable/teal_pill.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: splash_logo.png, ic_launcher_round.png">
+        <location
+            file="src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"/>
+        <location
+            file="src/main/res/drawable-xhdpi/splash_logo.png"/>
+    </issue>
+
+</issues>

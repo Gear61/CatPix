@@ -1,11 +1,11 @@
 package com.randomappsinc.catpix.views
 
 import android.content.Context
-import android.support.annotation.IdRes
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.IdRes
 import butterknife.BindColor
 import butterknife.BindView
 import butterknife.ButterKnife

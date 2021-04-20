@@ -3,12 +3,12 @@ package com.randomappsinc.catpix.adapters
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.support.v4.content.ContextCompat
-import android.support.v4.view.GestureDetectorCompat
-import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.view.GestureDetectorCompat
+import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindColor
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -39,7 +39,7 @@ class HomeFeedAdapter(var context: Context, private var listener: Listener)
     private var idToPosition = HashMap<String, Int>()
 
     fun addPicturesUrls(newPictures: List<CatPicture>) {
-        val wasShowingSpinner = !pictures.isEmpty()
+        val wasShowingSpinner = pictures.isNotEmpty()
         val prevSize = itemCount
 
         // Maintain picture ID -> position mapping

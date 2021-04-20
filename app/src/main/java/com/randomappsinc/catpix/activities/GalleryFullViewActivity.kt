@@ -5,12 +5,12 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.ShareCompat
-import android.support.v4.view.ViewPager
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ShareCompat
+import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -53,7 +53,7 @@ class GalleryFullViewActivity : AppCompatActivity(), SetWallpaperManager.SetWall
         ButterKnife.bind(this)
 
         val pictures = intent.getParcelableArrayListExtra<CatPicture>(PICTURES_KEY)
-        galleryAdapter = GalleryFullViewAdapter(supportFragmentManager, pictures)
+        galleryAdapter = GalleryFullViewAdapter(supportFragmentManager, pictures!!)
         picturesPager.offscreenPageLimit = 2
         picturesPager.adapter = galleryAdapter
 

@@ -11,27 +11,31 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar">
+        android:layout_below="@id/toolbar"
+        >
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/favorites_grid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="2dp"
-            android:clipToPadding="false"/>
+            android:clipToPadding="false"
+            />
 
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/no_results"
             android:text="@string/no_favorites"
-            style="@style/no_content"/>
+            style="@style/no_content"
+            />
 
-        <android.support.v4.widget.ContentLoadingProgressBar
+        <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/favorites_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layout_gravity="center"
-            style="?android:attr/progressBarStyle"/>
+            style="?android:attr/progressBarStyle"
+            />
     </FrameLayout>
 
     <View

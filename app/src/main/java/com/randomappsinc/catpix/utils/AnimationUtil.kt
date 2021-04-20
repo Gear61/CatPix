@@ -3,10 +3,10 @@ package com.randomappsinc.catpix.utils
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.support.v4.content.ContextCompat
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.AnticipateOvershootInterpolator
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.randomappsinc.catpix.R
 
 fun animateFavoriteToggle(

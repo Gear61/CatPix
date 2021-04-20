@@ -3,7 +3,7 @@ package com.randomappsinc.catpix.utils
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.support.v4.app.ShareCompat
+import androidx.core.app.ShareCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.randomappsinc.catpix.R
 import com.randomappsinc.catpix.persistence.PreferencesManager

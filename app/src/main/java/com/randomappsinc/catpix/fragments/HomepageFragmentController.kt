@@ -1,7 +1,7 @@
 package com.randomappsinc.catpix.fragments
 
-import android.support.annotation.IdRes
-import android.support.v4.app.FragmentManager
+import androidx.annotation.IdRes
+import androidx.fragment.app.FragmentManager
 import com.randomappsinc.catpix.R
 
 class HomepageFragmentController(private val fragmentManager: FragmentManager, private val containerId: Int) {
